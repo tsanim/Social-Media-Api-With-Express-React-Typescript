@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UploadedImagePreview component should render initial layout 1`] = `
+Array [
+  <div
+    className="uploadedImgPreview"
+  >
+    <React.Fragment>
+      <img
+        alt="uploadedImg"
+        id="previewImg"
+        src="123"
+      />
+      <div
+        className="overlay"
+        onClick={[MockFunction]}
+      >
+        <span>
+          x
+        </span>
+      </div>
+    </React.Fragment>
+  </div>,
+]
+`;

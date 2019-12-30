@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreatePostForm component should render initial layout 1`] = `
+Array [
+  <div
+    id="makeAPost"
+  >
+    <figure
+      className="userInfo"
+    >
+      <UserDataLink
+        user={Object {}}
+      />
+    </figure>
+    <Unknown
+      uploadHandler={[MockFunction]}
+    />
+  </div>,
+]
+`;

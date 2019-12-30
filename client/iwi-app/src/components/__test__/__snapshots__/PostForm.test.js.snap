@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostForm Component should render initial layout 1`] = `
+Array [
+  <div
+    className="postForm"
+  >
+    <form
+      encType="multipart/form-data"
+      id="postForm"
+      onSubmit={[Function]}
+    >
+      <textarea
+        id="postText"
+        name="text"
+        onChange={[Function]}
+        placeholder="Write something to your friends..."
+        value=""
+      />
+      <div
+        className="inline-form-items"
+      >
+        <div
+          className="uploadImage"
+        >
+          <label
+            htmlFor="file"
+          >
+            <img
+              alt="uploadImg"
+              className="icon"
+              src="https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png"
+            />
+            Image
+          </label>
+          <input
+            id="file"
+            name="postImg"
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+        <input
+          disabled={true}
+          type="submit"
+          value="Post"
+        />
+      </div>
+    </form>
+    <UploadedImagePreview
+      handlePreviewImgClose={[Function]}
+      imagePreviewUrl=""
+    />
+  </div>,
+]
+`;

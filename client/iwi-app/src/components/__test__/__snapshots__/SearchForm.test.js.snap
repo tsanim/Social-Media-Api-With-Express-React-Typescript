@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchForm Component should render initial layout 1`] = `
+Array [
+  <form
+    id="searchForm"
+    onSubmit={[Function]}
+  >
+    <input
+      name="searchText"
+      onChange={[Function]}
+      placeholder="Search..."
+      type="search"
+      value=""
+    />
+  </form>,
+]
+`;

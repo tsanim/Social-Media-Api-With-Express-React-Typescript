@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component should render initial layout 1`] = `
+Array [
+  <footer>
+    <p>
+      Ⓒ CopyRights Tsani Mazalov 2019
+    </p>
+  </footer>,
+]
+`;

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeleteModal component should render initial layout 1`] = `
+Array [
+  <div>
+    <div
+      className="modal"
+      id="myModal"
+    >
+      <div
+        className="modal-content"
+      >
+        <span
+          className="close"
+          onClick={[MockFunction]}
+        >
+          ×
+        </span>
+        <p>
+          Do you really want to delete this post?
+        </p>
+        <button
+          className="btn info"
+          onClick={[Function]}
+        >
+          Yes
+        </button>
+        <button
+          className="btn default"
+          onClick={[MockFunction]}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>,
+]
+`;

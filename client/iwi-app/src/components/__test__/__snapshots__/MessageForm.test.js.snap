@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageForm Component should render initial layout 1`] = `
+Array [
+  <div
+    className="messageForm"
+  >
+    <form
+      id="messageForm"
+    >
+      <input
+        name="messageText"
+        onBlur={[MockFunction]}
+        onChange={[MockFunction]}
+        onKeyDown={[MockFunction]}
+        onKeyPress={[MockFunction]}
+        placeholder="Type a message"
+        type="text"
+        value="text"
+      />
+      <input
+        onClick={[MockFunction]}
+        type="button"
+        value="Send"
+      />
+    </form>
+  </div>,
+]
+`;

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component should render initial layout 1`] = `
+Array [
+  <header>
+    <div
+      className="logo"
+    >
+      <Link
+        to="/"
+      >
+        <h1>
+          iWi
+        </h1>
+      </Link>
+    </div>
+    <Nav
+      signoutHandler={[MockFunction]}
+      switchToOffline={[MockFunction]}
+      switchToOnline={[MockFunction]}
+      user={Object {}}
+    />
+  </header>,
+]
+`;

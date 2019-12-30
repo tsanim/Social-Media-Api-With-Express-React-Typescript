@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditProfilePictureForm Component should render initial layout 1`] = `
+Array [
+  <form
+    className="editForm"
+    encType="multipart/form-data"
+    onSubmit={[Function]}
+  >
+    <figure>
+      <img
+        alt="userPic"
+        className="profileImg"
+        src="http://localhost:9999/feed/image/"
+      />
+      <div
+        className="uploadImage"
+      >
+        <label
+          htmlFor="file"
+        >
+          <img
+            alt="uploadImg"
+            className="icon"
+            src="https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png"
+          />
+          Change Profile Picture
+        </label>
+        <input
+          id="file"
+          name="avatar"
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </figure>
+    <input
+      type="submit"
+      value="SAVE"
+    />
+  </form>,
+]
+`;

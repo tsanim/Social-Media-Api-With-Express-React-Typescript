@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Online Users component should render initial layout 1`] = `
+Array [
+  <div
+    className="onlineUsers"
+  >
+    <h3>
+      Online users
+    </h3>
+    <ul>
+      <li>
+        <button
+          id="123"
+          onClick={[MockFunction]}
+        >
+          <UserCard
+            user={
+              Object {
+                "_id": "123",
+              }
+            }
+          />
+        </button>
+      </li>
+    </ul>
+  </div>,
+]
+`;

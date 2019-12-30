@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component should render initial layout 1`] = `
+Array [
+  <div
+    className="modal"
+    id="myModal"
+    onClick={[MockFunction]}
+  >
+    <div
+      className="modal-content"
+    >
+      <span
+        className="close"
+        onClick={[MockFunction]}
+      >
+        ×
+      </span>
+      <div
+        className="modal-header"
+      >
+        <h2>
+          header name
+        </h2>
+      </div>
+      <ul>
+        <li>
+          <Link
+            to="/profile/123"
+          >
+            <UserCard
+              user={
+                Object {
+                  "_id": "123",
+                }
+              }
+            />
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </div>,
+]
+`;

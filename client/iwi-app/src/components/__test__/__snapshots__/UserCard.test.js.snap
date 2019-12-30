@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UsesCard component should render initial layout 1`] = `
+Array [
+  <div
+    className="card"
+  >
+    <figure>
+      <img
+        alt=""
+        src="http://localhost:9999/feed/image/undefined"
+      />
+      <div
+        className="names"
+      >
+        <figcaption />
+        <span
+          className="fullname"
+        >
+           
+        </span>
+      </div>
+    </figure>
+  </div>,
+]
+`;

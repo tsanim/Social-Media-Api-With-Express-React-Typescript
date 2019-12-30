@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditFeedForm Component should render initial layout 1`] = `
+Array [
+  <form
+    id="editFeedForm"
+    onSubmit={[Function]}
+  >
+    <textarea
+      id="feed"
+      name="text"
+      onChange={[Function]}
+      placeholder="Write something..."
+    />
+    <input
+      type="submit"
+      value="SAVE"
+    />
+    <button
+      onClick={[MockFunction]}
+    >
+      Undo
+    </button>
+  </form>,
+]
+`;

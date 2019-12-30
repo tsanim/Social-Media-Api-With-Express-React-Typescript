@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Messages component should render initial layout 1`] = `
+Array [
+  <_default
+    className="messagesContainer"
+  >
+    <p
+      className="msg"
+    >
+      
+    </p>
+    <ul>
+      <li
+        className="clearfix"
+      >
+        <Message
+          isMine={false}
+          message={
+            Object {
+              "creator": Object {},
+            }
+          }
+        />
+      </li>
+    </ul>
+  </_default>,
+]
+`;

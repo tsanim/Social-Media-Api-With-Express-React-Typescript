@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentForm Component should render initial layout 1`] = `
+Array [
+  <form
+    className="commentForm"
+    onSubmit={[Function]}
+  >
+    <textarea
+      id="comment"
+      name="text"
+      onChange={[Function]}
+      placeholder="Write a comment..."
+      value=""
+    />
+    <input
+      disabled={true}
+      type="submit"
+      value="Comment"
+    />
+  </form>,
+]
+`;

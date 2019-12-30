@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Room component should render initial layout 1`] = `
+Array [
+  <div
+    className="chat"
+  >
+    <header
+      className="chatHeader"
+    >
+      <UserChatCard
+        onlineUser={Object {}}
+      />
+    </header>
+    <Messages
+      infoMessage=""
+      messages={Array []}
+      onlineUser={Object {}}
+    />
+    <span
+      className="typing"
+    />
+    <MessageForm
+      onBlurHandler={[MockFunction]}
+      onInputChangeHandler={[MockFunction]}
+      onKeyDownHandler={[MockFunction]}
+      onKeyPressHandler={[MockFunction]}
+      sendMessageHandler={[MockFunction]}
+    />
+  </div>,
+]
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserChatCard component should render initial layout 1`] = `
+Array [
+  <figure
+    className="float-right"
+  >
+    <img
+      alt="userImg"
+      src="http://localhost:9999/feed/image/undefined"
+    />
+    <div
+      className="names"
+    >
+      <figcaption />
+    </div>
+  </figure>,
+]
+`;
