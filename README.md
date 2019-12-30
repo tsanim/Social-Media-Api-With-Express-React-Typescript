@@ -1,1 +1,1 @@
-# social-media-with-react-and-typescript
+# social-media-iwi-app
