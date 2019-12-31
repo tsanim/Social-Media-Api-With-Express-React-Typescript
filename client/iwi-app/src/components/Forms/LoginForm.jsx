@@ -10,7 +10,7 @@ import { List } from 'immutable';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import getFieldStyles from '../../utils/getFieldStyles';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 
 const initLoginState = {
     form: {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import EditUserInfoForm from '../../Forms/EditUserInfoForm';
 import ChangePasswordForm from '../../Forms/ChangePasswordForm';
 import EditProfilePicForm from '../../Forms/EditProfilePicForm';
-import UsersService from '../../../services/usersService';
+import UsersService from '../../../services/UsersService';
 import { resetErrors } from '../../../store/actions/errorsActions/actionsCreator';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';

@@ -19,7 +19,7 @@ import { wrapComponent } from 'react-snackbar-alert';
 import { Offline } from "react-detect-offline";
 
 import { logout, loginUser } from './store/actions/authActions/actionsCreator';
-import AuthService from './services/authService';
+import AuthService from './services/AuthService';
 
 import { resetPosts } from './store/actions/postsAtions/actionsCreator';
 import { online, offline } from './store/actions/connectionStatusActions/actionsCreator';

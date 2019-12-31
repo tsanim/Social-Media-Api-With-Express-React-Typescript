@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import CommentContainer from './CommentContainer';
 import CommentMeta from './CommentMeta';
 
-import CommentsService from '../../services/commentsService';
+import CommentsService from '../../services/CommentsService';
 
 function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler }) {
     const { creator: commentCreator, text, date, likes, _id } = comment;
