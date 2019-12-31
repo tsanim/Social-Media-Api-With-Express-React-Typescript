@@ -7,8 +7,8 @@ import PostsSection from '../../PostComponents/PostsSection';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 
-import { getUserPosts, likePost, dislikePost, deletePost, uploadPost, editPost } from '../../../services/postsService'
-import { likeComment, dislikeComment, deleteComment, makeComment } from '../../../services/commentsService'
+import CommentsService from '../../../services/commentsService';
+import PostsService from '../../../services/postsService';
 
 class MyProfile extends Component {
     state = {
@@ -88,16 +88,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        upload: (data) => dispatch(uploadPost(data)),
-        like: (postId) => dispatch(likePost(postId)),
-        dislike: (postId) => dispatch(dislikePost(postId)),
-        delPost: (postId) => dispatch(deletePost(postId)),
-        editUserPost: (data, postId) => dispatch(editPost(data, postId)),
-        likeCom: (_id) => dispatch(likeComment(_id)),
-        dislikeCom: (_id) => dispatch(dislikeComment(_id)),
-        deleteCom: (_id) => dispatch(deleteComment(_id)),
-        makeCom: (data) => dispatch(makeComment(data)),
-        getUserPosts: (id) => dispatch(getUserPosts(id)),
+        upload: (data) => dispatch(PostsService.uploadPost(data)),
+        like: (postId) => dispatch(PostsService.likePost(postId)),
+        dislike: (postId) => dispatch(PostsService.dislikePost(postId)),
+        delPost: (postId) => dispatch(PostsService.deletePost(postId)),
+        getUserPosts: (id) => dispatch(PostsService.getUserPosts(id)),
+        editUserPost: (data, postId) => dispatch(PostsService.editPost(data, postId)),
+        likeCom: (_id) => dispatch(CommentsService.likeComment(_id)),
+        dislikeCom: (_id) => dispatch(CommentsService.dislikeComment(_id)),
+        deleteCom: (_id) => dispatch(CommentsService.deleteComment(_id)),
+        makeCom: (data) => dispatch(CommentsService.makeComment(data)),
     }
 }
 

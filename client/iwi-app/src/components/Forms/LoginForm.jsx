@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginUser } from '../../services/authService';
 import { wrapComponent } from 'react-snackbar-alert';
 import { resetErrors } from '../../store/actions/errorsActions/actionsCreator';
 import PropTypes from 'prop-types';
@@ -11,6 +10,7 @@ import { List } from 'immutable';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import getFieldStyles from '../../utils/getFieldStyles';
+import AuthService from '../../services/authService';
 
 const initLoginState = {
     form: {
@@ -95,7 +95,7 @@ class LoginForm extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loginUser: (data) => dispatch(loginUser(data)),
+        loginUser: (data) => dispatch(AuthService.loginUser(data)),
         resetErrors: () => dispatch(resetErrors())
     }
 }
