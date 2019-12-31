@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import EditUserInfoForm from '../../Forms/EditUserInfoForm';
 import ChangePasswordForm from '../../Forms/ChangePasswordForm';
 import EditProfilePicForm from '../../Forms/EditProfilePicForm';
-import { changePassword, changeUserPic, editUserInfo } from '../../../services/usersService'
+import UsersService from '../../../services/usersService';
 import { resetErrors } from '../../../store/actions/errorsActions/actionsCreator';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
@@ -47,9 +47,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        changePass: (data) => dispatch(changePassword(data)),
-        changeProfilePic: (data) => dispatch(changeUserPic(data)),
-        editUserInformation: (data) => dispatch(editUserInfo(data)),
+        changePass: (data) => dispatch(UsersService.changePassword(data)),
+        changeProfilePic: (data) => dispatch(UsersService.changeUserPic(data)),
+        editUserInformation: (data) => dispatch(UsersService.editUserInfo(data)),
         resetErrors: () => dispatch(resetErrors()),
     }
 }

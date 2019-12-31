@@ -6,6 +6,7 @@ import Room from '../../ChatComponents/Room';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import OnlineUsers from '../../ChatComponents/OnlineUsers';
+import ChatService from '../../../services/chatService';
 import { getRoomMessages, getOnlineUsers, joinSenderRoom } from '../../../services/chatService';
 import { wrapComponent } from 'react-snackbar-alert';
 
@@ -25,13 +26,12 @@ class Chat extends Component {
     }
 
     showRoomHandler = async (e) => {
-
         try {
             const onlineUser = this.state.onlineUsers.find(u => u._id === e.currentTarget.id);
 
             socket.emit('joinRoom', { userId: onlineUser._id, senderId: localStorage.getItem('userId') });
             socket.emit('sendNotification', { senderId: localStorage.getItem('userId'), notificatedUserId: onlineUser._id });
-            let stateMessages = await getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
+            let stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
 
             this.setState(oldState => ({
                 onlineUser,
@@ -161,8 +161,8 @@ class Chat extends Component {
 
         if ((!oldSender && sender) || (oldSender !== sender)) {
             try {
-                let stateMessages = await getRoomMessages(socket, localStorage.getItem('userId'), sender)
-                let onlineUser = await joinSenderRoom(socket, localStorage.getItem('userId'), sender);
+                let stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender)
+                let onlineUser = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender);
 
                 this.setState({
                     isRoomShown: true,
@@ -183,7 +183,7 @@ class Chat extends Component {
 
         if (this.state.onlineUser._id) {
             try {
-                let messages = await getRoomMessages(socket, localStorage.getItem('userId'), this.state.onlineUser._id);
+                let messages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), this.state.onlineUser._id);
 
                 this.setState({ messages });
             } catch (error) {
@@ -193,8 +193,8 @@ class Chat extends Component {
 
         if (sender) {
             try {
-                let stateMessages = await getRoomMessages(socket, localStorage.getItem('userId'), sender);
-                let onlineUser = await joinSenderRoom(socket, localStorage.getItem('userId'), sender);
+                let stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender);
+                let onlineUser = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender);
 
                 this.setState(oldState => {
                     return {
@@ -211,7 +211,7 @@ class Chat extends Component {
 
         this.timer = setInterval(async () => {
             try {
-                const onlineUsers = await getOnlineUsers(socket);
+                const onlineUsers = await ChatService.getOnlineUsers(socket);
                 const currentUserSubs = this.props.currentUser.get('subscriptions').toJS();
 
                 this.setState({

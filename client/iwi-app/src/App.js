@@ -19,7 +19,8 @@ import { wrapComponent } from 'react-snackbar-alert';
 import { Offline } from "react-detect-offline";
 
 import { logout, loginUser } from './store/actions/authActions/actionsCreator';
-import { setCurrentUser } from './services/authService'
+import AuthService from './services/authService';
+
 import { resetPosts } from './store/actions/postsAtions/actionsCreator';
 import { online, offline } from './store/actions/connectionStatusActions/actionsCreator';
 import SearchPosts from './components/App/SearchPosts/SearchPosts';
@@ -101,7 +102,7 @@ function mapDispatchToProps(dispatch) {
     switchToOnline: () => dispatch(online()),
     switchToOffline: () => dispatch(offline()),
     loginUser: (user) => dispatch(loginUser(user)),
-    setCurrentUser: (userId) => dispatch(setCurrentUser(userId))
+    setCurrentUser: (userId) => dispatch(AuthService.setCurrentUser(userId))
   }
 }
 
