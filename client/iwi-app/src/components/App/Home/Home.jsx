@@ -5,8 +5,8 @@ import PostsSection from '../../PostComponents/PostsSection';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 
-import CommentsService from '../../../services/commentsService';
-import PostsService from '../../../services/postsService';
+import CommentsService from '../../../services/CommentsService';
+import PostsService from '../../../services/PostsService';
 
 class Home extends Component {
     componentDidUpdate(prevProps) {

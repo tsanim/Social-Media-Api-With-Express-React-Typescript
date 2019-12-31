@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostsSection from '../../PostComponents/PostsSection';
-import UsersService from '../../../services/usersService';
+import UsersService from '../../../services/UsersService';
 import Modal from '../../Modals/Modal';
 import { Redirect } from 'react-router-dom';
 import Loader from '../../Loader/Loader';
@@ -9,8 +9,8 @@ import UserInfoContainer from '../../UserInfoComponents/UserInfoContainer';
 import PropTypes from 'prop-types';
 import {List, Map} from "immutable";
 
-import CommentsService from '../../../services/commentsService';
-import PostsService from '../../../services/postsService';
+import CommentsService from '../../../services/CommentsService';
+import PostsService from '../../../services/PostsService';
 
 class UserProfile extends Component {
     state = {

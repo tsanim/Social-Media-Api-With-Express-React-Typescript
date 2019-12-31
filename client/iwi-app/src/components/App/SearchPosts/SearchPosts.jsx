@@ -5,10 +5,10 @@ import SearchForm from '../../Forms/SearchForm';
 import PropTypes from 'prop-types';
 import {List, Map} from "immutable";
 
-import CommentsService from '../../../services/commentsService';
-import PostsService from '../../../services/postsService';
+import CommentsService from '../../../services/CommentsService';
+import PostsService from '../../../services/PostsService';
 
-import { likePost, dislikePost, deletePost, searchPosts, editPost } from '../../../services/postsService';
+import { likePost, dislikePost, deletePost, searchPosts, editPost } from '../../../services/PostsService';
 
 class SearchPosts extends Component {
     render() {

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserAlt, faUserCircle, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import AuthService from '../../services/authService';
+import AuthService from '../../services/AuthService';
 import { resetErrors } from '../../store/actions/errorsActions/actionsCreator';
 import { wrapComponent } from 'react-snackbar-alert';
 import PropTypes from 'prop-types';

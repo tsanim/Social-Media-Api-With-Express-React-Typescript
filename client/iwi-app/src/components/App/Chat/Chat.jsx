@@ -6,8 +6,8 @@ import Room from '../../ChatComponents/Room';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import OnlineUsers from '../../ChatComponents/OnlineUsers';
-import ChatService from '../../../services/chatService';
-import { getRoomMessages, getOnlineUsers, joinSenderRoom } from '../../../services/chatService';
+import ChatService from '../../../services/ChatService';
+import { getRoomMessages, getOnlineUsers, joinSenderRoom } from '../../../services/ChatService';
 import { wrapComponent } from 'react-snackbar-alert';
 
 const chatEndPoint = 'localhost:8888'

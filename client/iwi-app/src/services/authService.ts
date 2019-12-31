@@ -9,7 +9,7 @@ import RequestOptions from '../interfaces/RequestOptions.interface';
 
 type ErrorsType = string | string[] | object[];
 
-export default class authService {
+export default class AuthService {
     static registerUser(userData: User.RegisterUser) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
