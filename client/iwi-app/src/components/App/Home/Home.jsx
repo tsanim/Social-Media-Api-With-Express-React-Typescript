@@ -5,8 +5,8 @@ import PostsSection from '../../PostComponents/PostsSection';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 
-import { getUserPosts, getAllSubsPosts, uploadPost, editPost, likePost, dislikePost, deletePost } from '../../../services/postsService';
-import { likeComment, dislikeComment, deleteComment, makeComment } from '../../../services/commentsService'
+import CommentsService from '../../../services/CommentsService';
+import PostsService from '../../../services/PostsService';
 
 class Home extends Component {
     componentDidUpdate(prevProps) {
@@ -69,17 +69,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUserPosts: (id) => dispatch(getUserPosts(id)),
-        getSubsPosts: () => dispatch(getAllSubsPosts()),
-        upload: (data) => dispatch(uploadPost(data)),
-        like: (postId) => dispatch(likePost(postId)),
-        dislike: (postId) => dispatch(dislikePost(postId)),
-        editUserPost: (data, postId) => dispatch(editPost(data, postId)),
-        delPost: (postId) => dispatch(deletePost(postId)),
-        likeCom: (_id) => dispatch(likeComment(_id)),
-        dislikeCom: (_id) => dispatch(dislikeComment(_id)),
-        deleteCom: (_id) => dispatch(deleteComment(_id)),
-        makeCom: (data) => dispatch(makeComment(data))
+        getUserPosts: (id) => dispatch(PostsService.getUserPosts(id)),
+        getSubsPosts: () => dispatch(PostsService.getAllSubsPosts()),
+        upload: (data) => dispatch(PostsService.uploadPost(data)),
+        like: (postId) => dispatch(PostsService.likePost(postId)),
+        dislike: (postId) => dispatch(PostsService.dislikePost(postId)),
+        editUserPost: (data, postId) => dispatch(PostsService.editPost(data, postId)),
+        delPost: (postId) => dispatch(PostsService.deletePost(postId)),
+        likeCom: (_id) => dispatch(CommentsService.likeComment(_id)),
+        dislikeCom: (_id) => dispatch(CommentsService.dislikeComment(_id)),
+        deleteCom: (_id) => dispatch(CommentsService.deleteComment(_id)),
+        makeCom: (data) => dispatch(CommentsService.makeComment(data))
     }
 }
 

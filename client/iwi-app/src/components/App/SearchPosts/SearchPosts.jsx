@@ -5,8 +5,10 @@ import SearchForm from '../../Forms/SearchForm';
 import PropTypes from 'prop-types';
 import {List, Map} from "immutable";
 
-import { likePost, dislikePost, deletePost, searchPosts, editPost } from '../../../services/postsService'
-import { likeComment, dislikeComment, deleteComment, makeComment } from '../../../services/commentsService'
+import CommentsService from '../../../services/CommentsService';
+import PostsService from '../../../services/PostsService';
+
+import { likePost, dislikePost, deletePost, searchPosts, editPost } from '../../../services/PostsService';
 
 class SearchPosts extends Component {
     render() {
@@ -47,15 +49,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        search: (data) => dispatch(searchPosts(data)),
-        like: (postId) => dispatch(likePost(postId)),
-        dislike: (postId) => dispatch(dislikePost(postId)),
-        delPost: (postId) => dispatch(deletePost(postId)),
-        editUserPost: (data, postId) => dispatch(editPost(data, postId)),
-        likeCom: (_id) => dispatch(likeComment(_id)),
-        dislikeCom: (_id) => dispatch(dislikeComment(_id)),
-        deleteCom: (_id) => dispatch(deleteComment(_id)),
-        makeCom: (data) => dispatch(makeComment(data)),
+        search: (data) => dispatch(PostsService.searchPosts(data)),
+        like: (postId) => dispatch(PostsService.likePost(postId)),
+        dislike: (postId) => dispatch(PostsService.dislikePost(postId)),
+        delPost: (postId) => dispatch(PostsService.deletePost(postId)),
+        editUserPost: (data, postId) => dispatch(PostsService.editPost(data, postId)),
+        likeCom: (_id) => dispatch(CommentsService.likeComment(_id)),
+        dislikeCom: (_id) => dispatch(CommentsService.dislikeComment(_id)),
+        deleteCom: (_id) => dispatch(CommentsService.deleteComment(_id)),
+        makeCom: (data) => dispatch(CommentsService.makeComment(data)),
     }
 }
 

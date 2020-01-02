@@ -5,7 +5,8 @@ import UserDataLink from '../UserInfoComponents/UserDataLink';
 import PropTypes from 'prop-types';
 import CommentContainer from './CommentContainer';
 import CommentMeta from './CommentMeta';
-import { fetchCommentsLikes } from '../../services/commentsService';
+
+import CommentsService from '../../services/CommentsService';
 
 function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler }) {
     const { creator: commentCreator, text, date, likes, _id } = comment;
@@ -29,7 +30,7 @@ function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandl
     //when component did mound , fetched the likers of the comment for showing them in the modal
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        fetchCommentsLikes(_id, (data) => {
+        CommentsService.fetchCommentsLikes(_id, (data) => {
             setLikers(() => data.likes);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps

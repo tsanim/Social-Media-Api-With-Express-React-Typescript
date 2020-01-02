@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FoundPeopleList from '../../DiscoverComponents/FoundPeopleList';
 import { connect } from 'react-redux';
-import { searchUser } from '../../../services/usersService';
+import UsersService from '../../../services/UsersService';
 import SearchForm from '../../Forms/SearchForm';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
@@ -35,7 +35,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        search: (data) => dispatch(searchUser(data))
+        search: (data) => dispatch(UsersService.searchUser(data))
     }
 }
 
