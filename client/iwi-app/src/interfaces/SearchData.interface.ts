@@ -1,3 +1,3 @@
 export default interface SearchData {
-    searchText: string
+    searchText: string;
 }
