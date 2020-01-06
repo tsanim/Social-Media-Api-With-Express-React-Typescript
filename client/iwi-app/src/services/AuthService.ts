@@ -9,7 +9,7 @@ import RequestOptions from '../interfaces/RequestOptions.interface';
 
 export default class AuthService {
     static registerUser(userData: AuthUser.RegisterUser) {
-        return (dispatch: any) => {
+        return (dispatch: any): Promise<any> => {
             dispatch(fetchStatusActions.beginFetch());
 
             const onError = (errors: any) => {
@@ -31,7 +31,7 @@ export default class AuthService {
     }
 
     static loginUser(userData: AuthUser.LoginUser) {
-        return (dispatch: any) => {
+        return (dispatch: any): Promise<any> => {
             dispatch(fetchStatusActions.beginFetch());
 
             const onError = (errors: any) => {
@@ -63,7 +63,7 @@ export default class AuthService {
     }
 
     static setCurrentUser(userId: string) {
-        return (dispatch: any) => {
+        return (dispatch: any): Promise<any> => {
             const optionsReq: RequestOptions = {
                 method: 'get',
                 url: `${URI}/user/info/${userId}`,
