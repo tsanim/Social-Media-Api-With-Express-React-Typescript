@@ -40,12 +40,12 @@ Room.propTypes = {
     onlineUser: PropTypes.object,
     messages: PropTypes.array,
     infoMessage: PropTypes.string,
-    typing: PropTypes.string,
+    typingMessage: PropTypes.string,
     onInputChangeHandler: PropTypes.func,
     onKeyPressHandler: PropTypes.func,
     onKeyDownHandler: PropTypes.func,
     onBlurHandler: PropTypes.func,
-    message: PropTypes.string,
+    messageText: PropTypes.string,
     sendMessageHandler: PropTypes.func,
     onUnmountHandler: PropTypes.func
 }

@@ -4,12 +4,12 @@ import * as fetchStatusActions from '../store/actions/fetchStatusActions/actions
 import URI from '../config/config';
 
 import httpRequest from '../utils/httpRequest';
-import Post from '../interfaces/Post.interface';
+import PostData from '../interfaces/Feed/PostData.interface';
 import RequestOptions from '../interfaces/RequestOptions.interface';
 import SearchData from '../interfaces/SearchData.interface';
 
 export default class PostsService {
-    static uploadPost(postData: Post) {
+    static uploadPost(postData: PostData) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
     
@@ -139,7 +139,7 @@ export default class PostsService {
         }
     }
     
-    static editPost(postData: Post, postId: string) {
+    static editPost(postData: PostData, postId: string) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
     
