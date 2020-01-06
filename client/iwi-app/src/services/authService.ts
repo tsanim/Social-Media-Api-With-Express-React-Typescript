@@ -2,19 +2,17 @@ import * as authActions from '../store/actions/authActions/actionsCreator';
 import * as errorsActions from '../store/actions/errorsActions/actionsCreator';
 import * as fetchStatusActions from '../store/actions/fetchStatusActions/actionsCreator';
 import URI from '../config/config';
-import * as User from '../interfaces/User.interface';
+import * as AuthUser from '../interfaces/User/AuthUser.interface';
 
 import httpRequest from '../utils/httpRequest';
 import RequestOptions from '../interfaces/RequestOptions.interface';
 
-type ErrorsType = string | string[] | object[];
-
 export default class AuthService {
-    static registerUser(userData: User.RegisterUser) {
+    static registerUser(userData: AuthUser.RegisterUser) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
 
-            const onError = (errors: ErrorsType) => {
+            const onError = (errors: any) => {
                 dispatch(errorsActions.fetchError(errors));
             };
 
@@ -32,11 +30,11 @@ export default class AuthService {
         }
     }
 
-    static loginUser(userData: User.LoginUser) {
+    static loginUser(userData: AuthUser.LoginUser) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
 
-            const onError = (errors: ErrorsType) => {
+            const onError = (errors: any) => {
                 dispatch(errorsActions.fetchError(errors));
             };
 

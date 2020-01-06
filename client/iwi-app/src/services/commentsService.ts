@@ -3,7 +3,7 @@ import URI from '../config/config';
 
 import httpRequest from '../utils/httpRequest';
 import RequestOptions from '../interfaces/RequestOptions.interface';
-import Comment from '../interfaces/Comment.interface';
+import CommentData from '../interfaces/Feed/CommentData.interface';
 
 export default class CommentsService {
     static fetchCommentsLikes(commentId: string, onSuccess: (data: any) => void) {
@@ -22,7 +22,7 @@ export default class CommentsService {
         return httpRequest(options);
     }
     
-    static makeComment(commentData: Comment) {
+    static makeComment(commentData: CommentData) {
         return (dispatch: any) => {
             //init options for request
             const optionsReq: RequestOptions = {

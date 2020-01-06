@@ -1,3 +1,5 @@
+import User from "../interfaces/User/User.interface";
+
 export default class ChatService {
     static getRoomMessages(socket: any, currentUserId: string, onlineUserId: string) {
         socket.emit('getMessages', { currentUserId, onlineUserId });
@@ -23,7 +25,7 @@ export default class ChatService {
         socket.emit('joinSenderRoom', { userId, senderId });
     
         return new Promise((resolve, reject) => {
-            socket.on('joinSenderRoom', ({ user }: { user: object }) => {
+            socket.on('joinSenderRoom', ({ user }: { user: User }) => {
                 resolve(user);
             })
         })

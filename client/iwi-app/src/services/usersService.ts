@@ -8,7 +8,7 @@ import URI from '../config/config';
 import httpRequest from '../utils/httpRequest';
 import SearchData from '../interfaces/SearchData.interface';
 import RequestOptions from '../interfaces/RequestOptions.interface';
-import * as User from '../interfaces/User.interface';
+import { EditUserInformation, ChangePassword } from '../interfaces/Components/EditUserInformation/EditUserInfoProps.interface';
 
 export default class UsersService {
     static searchUser({ searchText }: SearchData) {
@@ -94,7 +94,7 @@ export default class UsersService {
         }
     }
     
-    static editUserInfo(userData: User.RegisterUser) {
+    static editUserInfo(userData: EditUserInformation) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
     
@@ -117,7 +117,7 @@ export default class UsersService {
         }
     }
     
-    static changeUserPic(userPic: FormData) {
+    static changeUserPic(userPic: { avatar: File }) {
         return async (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
     
@@ -138,7 +138,7 @@ export default class UsersService {
         }
     }
     
-    static changePassword(passData: { oldPasword: string, newPassword: string }) {
+    static changePassword(passData: ChangePassword) {
         return (dispatch: any) => {
             dispatch(fetchStatusActions.beginFetch());
     
