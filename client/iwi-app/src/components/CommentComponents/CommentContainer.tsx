@@ -2,8 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+import CommentContainerProps from '../../interfaces/Components/CommentComponents/CommentContainerProps.interface';
 
-function CommentContainer(props) {
+function CommentContainer(props: CommentContainerProps) {
     return (
         <div className="commentContainer">
             {/* If edit form is shown , both comment's text and buttons are not shown */}
@@ -11,8 +12,8 @@ function CommentContainer(props) {
             <div className="commentBtns">
                 {
                     props.isLiked
-                        ? <button onClick={props.handleDisLikeComment} className="liked"><FontAwesomeIcon icon={faHeart} /></button>
-                        : <button onClick={props.handleLikeComment}><FontAwesomeIcon icon={faHeart} /></button>
+                        ? <button onClick={props.handleDislikeComment as () => void} className="liked"><FontAwesomeIcon icon={faHeart} /></button>
+                        : <button onClick={props.handleLikeComment as () => void}><FontAwesomeIcon icon={faHeart} /></button>
                 }
 
                 {
