@@ -81,7 +81,7 @@ function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandl
             <CommentContainer
                 text={text}
                 isLiked={isLiked}
-                handleDisLikeComment={handleDisLikeComment}
+                handleDislikeComment={handleDisLikeComment}
                 handleLikeComment={handleLikeComment}
                 handleShowModal={handleShowModal}
                 currentUser={currentUser}
