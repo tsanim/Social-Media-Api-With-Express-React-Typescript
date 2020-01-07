@@ -10,7 +10,6 @@ import PostMeta from './PostMeta';
 import httpRequest from '../../utils/httpRequest';
 import PropTypes from 'prop-types';
 import PostProps from '../../interfaces/Components/PostComponents/PostProps.interface';
-import { PlainUser } from '../../interfaces/User/User.interface';
 import { PlainPost } from '../../interfaces/Feed/Post.interface';
 
 function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePostHandler, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler, makeCommentHandler, editUserPostHandler }: PostProps) {
@@ -56,11 +55,11 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
     }
 
     const handleShowModal = () => {
-        setShowDeleteModal((showDeleteModal) => true);
+        setShowDeleteModal(() => true);
     }
 
     const handleShowLikesModal = () => {
-        setShowLikesPeopleModal((showLikesPeopleModal) => true);
+        setShowLikesPeopleModal(() => true);
     }
 
     const handleShowEditForm = () => {
@@ -68,7 +67,7 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
     }
 
     const handleClose = () => {
-        setShowDeleteModal((showDeleteModal) => false);
+        setShowDeleteModal(() => false);
         setShowLikesPeopleModal(() => false);
     }
 
