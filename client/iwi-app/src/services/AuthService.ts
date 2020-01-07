@@ -6,10 +6,12 @@ import * as AuthUser from '../interfaces/User/AuthUser.interface';
 
 import httpRequest from '../utils/httpRequest';
 import RequestOptions from '../interfaces/RequestOptions.interface';
+import { ThunkResult } from '../types';
+import { AppDispatch } from '..';
 
 export default class AuthService {
-    static registerUser(userData: AuthUser.RegisterUser) {
-        return (dispatch: any): Promise<any> => {
+    static registerUser(userData: AuthUser.RegisterUser): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
 
             const onError = (errors: any) => {
@@ -30,8 +32,8 @@ export default class AuthService {
         }
     }
 
-    static loginUser(userData: AuthUser.LoginUser) {
-        return (dispatch: any): Promise<any> => {
+    static loginUser(userData: AuthUser.LoginUser): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
 
             const onError = (errors: any) => {
@@ -62,8 +64,8 @@ export default class AuthService {
         }
     }
 
-    static setCurrentUser(userId: string) {
-        return (dispatch: any): Promise<any> => {
+    static setCurrentUser(userId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             const optionsReq: RequestOptions = {
                 method: 'get',
                 url: `${URI}/user/info/${userId}`,

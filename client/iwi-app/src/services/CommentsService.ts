@@ -4,9 +4,11 @@ import URI from '../config/config';
 import httpRequest from '../utils/httpRequest';
 import RequestOptions from '../interfaces/RequestOptions.interface';
 import CommentData from '../interfaces/Feed/CommentData.interface';
+import { AppDispatch } from '..';
+import { ThunkResult } from '../types';
 
 export default class CommentsService {
-    static fetchCommentsLikes(commentId: string, onSuccess: (data: any) => void) {
+    static fetchCommentsLikes(commentId: string, onSuccess: (data: any) => void): Promise<any> {
         const options: RequestOptions = {
             method: 'get',
             url: `${URI}/feed/comments/likes/${commentId}`,
@@ -22,8 +24,8 @@ export default class CommentsService {
         return httpRequest(options);
     }
     
-    static makeComment(commentData: CommentData) {
-        return (dispatch: any) => {
+    static makeComment(commentData: CommentData): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             //init options for request
             const optionsReq: RequestOptions = {
                 method: 'post',
@@ -43,8 +45,8 @@ export default class CommentsService {
         }
     }
     
-    static likeComment(commentId: string) {
-        return (dispatch: any) => {
+    static likeComment(commentId: string): ThunkResult<Promise<any>> {
+        return () => {
             const optionsReq = {
                 method: 'put',
                 url: `${URI}/feed/comments/like/${commentId}`,
@@ -59,8 +61,8 @@ export default class CommentsService {
     }
     
     
-    static dislikeComment(commentId: string) {
-        return (dispatch: any) => {
+    static dislikeComment(commentId: string): ThunkResult<Promise<any>> {
+        return () => {
             const optionsReq = {
                 method: 'put',
                 url: `${URI}/feed/comments/dislike/${commentId}`,
@@ -74,8 +76,8 @@ export default class CommentsService {
         }
     }
     
-    static deleteComment(commentId: string) {
-        return (dispatch: any) => {
+    static deleteComment(commentId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             const optionsReq: RequestOptions = {
                 method: 'delete',
                 url: `${URI}/feed/comments/delete/${commentId}`,
