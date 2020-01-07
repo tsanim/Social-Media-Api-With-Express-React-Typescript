@@ -6,7 +6,7 @@ export default class ChatService {
         socket.emit('getMessages', { currentUserId, onlineUserId });
     
         return new Promise((resolve, reject) => {
-            socket.on('messages', ({ messages }: Message[]) => {
+            socket.on('messages', ({ messages }: { messages: Message[]}) => {
                 resolve(messages);
             });
         });

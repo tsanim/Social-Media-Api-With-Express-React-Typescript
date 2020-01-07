@@ -7,8 +7,10 @@ import CommentContainer from './CommentContainer';
 import CommentMeta from './CommentMeta';
 
 import CommentsService from '../../services/CommentsService';
+import CommentProps from '../../interfaces/Components/CommentComponents/CommentProps.interface';
+import { PlainUser } from '../../interfaces/User/User.interface';
 
-function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler }) {
+function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler }: CommentProps) {
     const { creator: commentCreator, text, date, likes, _id } = comment;
 
     //hook for question modal about deleting
@@ -18,7 +20,7 @@ function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandl
     //hook for handle like post 
     const [likesCount, setlikesCount] = useState(likes.length);
     //hook for handle liked/not liked
-    const initCommentIsLiked = likes.includes(localStorage.getItem('userId'))
+    const initCommentIsLiked = (likes as string[]).includes(localStorage.getItem('userId'));
     const [isLiked, setIsLiked] = useState(initCommentIsLiked);
     //hook for likers
     const [likers, setLikers] = useState([]);
@@ -36,45 +38,45 @@ function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandl
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleLikeComment = (e) => {
-        setlikesCount((likesCount) => likesCount + 1);
-        setIsLiked((isLiked) => !isLiked);
+    const handleLikeComment = () => {
+        setlikesCount((likesCount: number) => likesCount + 1);
+        setIsLiked((isLiked: boolean) => !isLiked);
         likeCommentHandler(_id);
 
         //correct likers like add logged in user in likers array
-        setLikers((likers) => [...likers, currentUser]);
+        setLikers((likers: PlainUser[]) => [...likers, currentUser]);
     }
 
-    const handleDisLikeComment = (e) => {
-        setlikesCount((likesCount) => likesCount - 1);
-        setIsLiked((isLiked) => !isLiked);
+    const handleDisLikeComment = () => {
+        setlikesCount((likesCount: number) => likesCount - 1);
+        setIsLiked((isLiked: boolean) => !isLiked);
         dislikeCommentHandler(_id);
 
         //correct likers like remove logged in user from likers array
-        setLikers((likers) => {
+        setLikers((likers: PlainUser[]) => {
             likers = likers.filter(l => l._id !== currentUser._id)
             return likers;
         });
     }
 
-    const handleShowModal = (e) => {
-        setShowModal((showDeleteModal) => true);
+    const handleShowModal = () => {
+        setShowModal(() => true);
     }
 
-    const handleShowLikesModal = (e) => {
-        setShowLikesPeopleModal((showLikesPeopleModal) => true);
+    const handleShowLikesModal = () => {
+        setShowLikesPeopleModal(() => true);
     }
 
-    const handleClose = (e) => {
-        setShowModal((showDeleteModal) => false);
-        setShowLikesPeopleModal((showLikesPeopleModal) => false);
+    const handleClose = () => {
+        setShowModal(() => false);
+        setShowLikesPeopleModal(() => false);
 
     }
 
     return (
         <div className="comment">
             <figure className="commentData">
-                <UserDataLink user={commentCreator} />
+                <UserDataLink user={commentCreator as PlainUser} />
             </figure>
             <CommentContainer
                 text={text}
@@ -83,7 +85,7 @@ function Comment({ comment, currentUser, likeCommentHandler, dislikeCommentHandl
                 handleLikeComment={handleLikeComment}
                 handleShowModal={handleShowModal}
                 currentUser={currentUser}
-                commentCreator={commentCreator}
+                commentCreator={commentCreator as PlainUser}
             />
 
             <CommentMeta
