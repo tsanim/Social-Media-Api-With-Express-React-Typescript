@@ -39,9 +39,9 @@ class Chat extends Component<ChatProps, ChatState> {
 
             socket.emit('joinRoom', { userId: onlineUser._id, senderId: localStorage.getItem('userId') });
             socket.emit('sendNotification', { senderId: localStorage.getItem('userId'), notificatedUserId: onlineUser._id });
-            let stateMessages: any = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
+            const stateMessages: Message[] = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
 
-            this.setState(oldState => ({
+            this.setState(() => ({
                 onlineUser,
                 isRoomShown: true,
                 messages: [...stateMessages]
@@ -121,7 +121,7 @@ class Chat extends Component<ChatProps, ChatState> {
             }, 500)
         });
 
-        socket.on('joinRoom', ({ user }: { user: User}) => {
+        socket.on('joinRoom', ({ user }: { user: User }) => {
             this.setState({ roomId: user.roomId });
         });
 
@@ -136,7 +136,22 @@ class Chat extends Component<ChatProps, ChatState> {
                 <div className="chatWrapper">
                     <h1>Chat with your friends!</h1>
 
-                    { this.state.isRoomShown ? <Room onlineUser={this.state.onlineUser} messages={this.state.messages} infoMessage={this.state.infoMessage} typingMessage={this.state.typingMessage} onInputChangeHandler={this.onInputChangeHandler} onKeyPressHandler={this.onKeyPressHandler} onKeyDownHandler={this.onKeyDownHandler} onBlurHandler={this.onBlurHandler} messageText={this.state.messageText} sendMessageHandler={this.sendMessageHandler} onUnmountHandler={this.onUnmountHandler} /> : null  }
+                    {
+                        this.state.isRoomShown
+                            ? <Room
+                                onlineUser={this.state.onlineUser}
+                                messages={this.state.messages}
+                                infoMessage={this.state.infoMessage}
+                                typingMessage={this.state.typingMessage}
+                                onInputChangeHandler={this.onInputChangeHandler}
+                                onKeyPressHandler={this.onKeyPressHandler}
+                                onKeyDownHandler={this.onKeyDownHandler}
+                                onBlurHandler={this.onBlurHandler}
+                                messageText={this.state.messageText}
+                                sendMessageHandler={this.sendMessageHandler}
+                                onUnmountHandler={this.onUnmountHandler}
+                            />
+                            : null}
 
                     <OnlineUsers
                         onlineUsers={this.state.onlineUsers}
