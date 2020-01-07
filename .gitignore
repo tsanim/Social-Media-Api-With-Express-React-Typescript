@@ -18,6 +18,8 @@ services/__test__/chatService.test.js
 
 .env
 
+.vscode/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
