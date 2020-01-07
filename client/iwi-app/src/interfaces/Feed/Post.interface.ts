@@ -1,6 +1,6 @@
 import * as Immutable from "immutable";
 import User, { PlainUser } from "../User/User.interface";
-import Comment from "./CommentData.interface";
+import Comment from "./Comment.interface";
 
 export interface PlainPost {
     imageId?: string;

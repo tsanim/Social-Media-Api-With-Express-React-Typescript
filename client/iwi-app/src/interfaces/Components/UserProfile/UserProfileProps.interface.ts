@@ -1,9 +1,7 @@
-import * as Immutable from "immutable";
-import User from "../../User/User.interface";
 import Post from "../../Feed/Post.interface";
 import { RouteComponentProps } from "react-router-dom";
 import Store from "../../Store/Store.interface";
-import Comment from "../../Feed/CommentData.interface";
+import CommentData from "../../Feed/CommentData.interface";
 import UsersService from "../../../services/UsersService";
 import PostsService from "../../../services/PostsService";
 import CommentsService from "../../../services/CommentsService";
@@ -27,7 +25,7 @@ const mapDispatch = (dispatch: any) => {
         likeCom: (_id: string) => dispatch(CommentsService.likeComment(_id)),
         dislikeCom: (_id: string) => dispatch(CommentsService.dislikeComment(_id)),
         deleteCom: (_id: string) => dispatch(CommentsService.deleteComment(_id)),
-        makeCom: (data: Comment) => dispatch(CommentsService.makeComment(data))
+        makeCom: (data: CommentData) => dispatch(CommentsService.makeComment(data))
     }
 }
 
