@@ -18,7 +18,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppDispatch) => {
     return {
         upload: (data: PostData) => dispatch(PostsService.uploadPost(data)),
         like: (postId: string) => dispatch(PostsService.likePost(postId)),

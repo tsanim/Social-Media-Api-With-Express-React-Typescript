@@ -10,6 +10,8 @@ import { SnackbarProvider } from 'react-snackbar-alert';
 
 const { persistor, store } = storeCongig();
 
+export type AppDispatch = typeof store.dispatch;
+
 ReactDOM.render(
     <Router>
         <Provider store={store}>
