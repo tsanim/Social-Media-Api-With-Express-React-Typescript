@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import URI from '../../config/config';
 import PropTypes from 'prop-types';
+import UserDataLinkProps from '../../interfaces/Components/UserDataComponents/UserDataLinkProps.interface';
 
-function UserDataLink(props) {
+function UserDataLink(props: UserDataLinkProps) {
     const { _id, id, imageId, username } = props.user;
 
     return (

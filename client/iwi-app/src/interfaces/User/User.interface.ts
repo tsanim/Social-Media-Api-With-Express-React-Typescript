@@ -10,7 +10,7 @@ export interface PlainUser {
     imageId: string;
     email: string;
     followers: PlainUser[];
-    subscribers: PlainUser[];
+    subscriptions: PlainUser[];
     posts: PlainPost[];
     notifications?: Notification[];
     roomId?: string;
@@ -25,7 +25,7 @@ export default interface User extends Immutable.Map<string, any> {
     readonly imageId: string;
     readonly email: string;
     readonly followers: Immutable.List<User[]>;
-    readonly subscribers: Immutable.List<User[]>;
+    readonly subscriptions: Immutable.List<User[]>;
     readonly posts: Immutable.List<Post[]>;
     readonly notifications?: Immutable.List<Notification[]>;
     readonly roomId?: string;

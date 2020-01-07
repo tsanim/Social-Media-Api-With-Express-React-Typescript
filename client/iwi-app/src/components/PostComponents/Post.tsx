@@ -3,7 +3,7 @@ import calcTime from '../../utils/calcTime';
 import DeleteModal from '../Modals/DeleteModal';
 import EditFeedForm from '../Forms/EditFeedForm';
 import URI from '../../config/config';
-import Modal from '../Modals/Modal';
+import Modal from '../Modals/UserModal';
 import UserDataLink from '../UserInfoComponents/UserDataLink';
 import PostBtnsBar from './PostBtnsBar';
 import PostMeta from './PostMeta';

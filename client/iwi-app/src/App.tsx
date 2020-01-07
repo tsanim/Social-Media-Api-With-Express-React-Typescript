@@ -18,23 +18,23 @@ import Chat from './components/App/Chat/Chat';
 import { wrapComponent } from 'react-snackbar-alert';
 import { Offline } from "react-detect-offline";
 
-import { logout, loginUser } from './store/actions/authActions/actionsCreator';
-import AuthService from './services/AuthService';
-
-import { resetPosts } from './store/actions/postsAtions/actionsCreator';
-import { online, offline } from './store/actions/connectionStatusActions/actionsCreator';
 import SearchPosts from './components/App/SearchPosts/SearchPosts';
+import { connector, AppProps } from './interfaces/Components/AppProps.interface';
 
-class App extends Component {
+class App extends Component<AppProps> {
+  timer: number;
+
+  signoutHandler() {
+    this.props.signout();
+    this.props.resetUserPosts();
+  }
+
   render() {
     return (
       <div id="wrapper">
         <Header
           user={this.props.currentUser.toJS()}
-          signoutHandler={() => {
-            this.props.signout();
-            this.props.resetUserPosts();
-          }}
+          signoutHandler={this.signoutHandler}
           switchToOffline={this.props.switchToOffline}
           switchToOnline={this.props.switchToOnline}
           notifications={this.props.currentUser.get('notifications') ? this.props.currentUser.get('notifications').toJS() : null}
@@ -59,7 +59,7 @@ class App extends Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     if (!localStorage.getItem('userId') || !this.props.connectionStatus) {
       clearInterval(this.timer);
     }
@@ -87,23 +87,4 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    currentUser: state.systemReducer.get('currentUser'),
-    errors: state.errors,
-    connectionStatus: state.systemReducer.get('connectionStatus')
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    signout: () => dispatch(logout()),
-    resetUserPosts: () => dispatch(resetPosts()),
-    switchToOnline: () => dispatch(online()),
-    switchToOffline: () => dispatch(offline()),
-    loginUser: (user) => dispatch(loginUser(user)),
-    setCurrentUser: (userId) => dispatch(AuthService.setCurrentUser(userId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(wrapComponent(App));
+export default connector(wrapComponent(App));

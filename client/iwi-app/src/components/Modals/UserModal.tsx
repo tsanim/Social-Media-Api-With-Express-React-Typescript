@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserCard from '../DiscoverComponents/UserCard';
 import { Link } from 'react-router-dom';
+import UserModalProps from '../../interfaces/Components/Modals/UserModalProps.interface';
 
-function Modal(props) {
+function UserModal(props: UserModalProps) {
     return (
         <div onClick={props.handleClose} id="myModal" className="modal">
             {/* Modal content */}
@@ -32,11 +33,11 @@ function Modal(props) {
     )
 }
 
-Modal.propTypes = {
+UserModal.propTypes = {
     handleClose: PropTypes.func,
     modalHeaderName: PropTypes.string,
     users: PropTypes.array,
 }
 
 
-export default Modal;
+export default UserModal;

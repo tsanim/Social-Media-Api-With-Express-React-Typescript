@@ -7,5 +7,4 @@ export default interface HeaderProps {
     signoutHandler: () => void;
     switchToOffline: () => void;
     switchToOnline: () => void;
-    showDropDownHandler: () => void;
 }

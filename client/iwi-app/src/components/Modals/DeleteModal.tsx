@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DeleteModalProps from '../../interfaces/Components/Modals/DeleteModalProps.interface';
 
-function DeleteModal({ handleClose, deleteFunc, feedId, isPost }) {
+function DeleteModal({ handleClose, deleteFunc, feedId, isPost }: DeleteModalProps) {
     return (
         <div>
             {/* The Modal */}

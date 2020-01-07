@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import UserDataLink from './UserDataLink';
 import PropTypes from 'prop-types';
+import UserInfoContainerProps from '../../interfaces/Components/UserDataComponents/UserInfoContainerProps.interface';
 
-function UserInfoContainer(props) {
+function UserInfoContainer(props: UserInfoContainerProps) {
     const { posts, followers, subscriptions } = props.user;
     const userId = props.user._id ? props.user._id : props.user.id;
     

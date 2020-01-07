@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DeleteModal from '../Modals/DeleteModal';
-import Modal from '../Modals/Modal';
+import Modal from '../Modals/UserModal';
 import UserDataLink from '../UserInfoComponents/UserDataLink';
 import PropTypes from 'prop-types';
 import CommentContainer from './CommentContainer';
