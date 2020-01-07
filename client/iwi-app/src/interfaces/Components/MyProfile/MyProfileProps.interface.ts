@@ -8,6 +8,8 @@ import PostsService from "../../../services/PostsService";
 import CommentsService from "../../../services/CommentsService";
 import CommentData from "../../Feed/CommentData.interface";
 import { connect, ConnectedProps } from "react-redux";
+import { AppDispatch } from "../../..";
+import { AppThunkDispatch } from "../../../types";
 
 const mapState = (state: Store) => {
     return {
@@ -18,7 +20,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: AppDispatch) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         upload: (data: PostData) => dispatch(PostsService.uploadPost(data)),
         like: (postId: string) => dispatch(PostsService.likePost(postId)),

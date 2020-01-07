@@ -6,6 +6,7 @@ import UsersService from "../../../services/UsersService";
 import PostsService from "../../../services/PostsService";
 import CommentsService from "../../../services/CommentsService";
 import { connect, ConnectedProps } from "react-redux";
+import { AppThunkDispatch } from "../../../types";
 
 const mapState = (state: Store) => {
     return {
@@ -15,7 +16,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         follow: (userId: string) => dispatch(UsersService.followUser(userId)),
         unfollow: (userId: string) => dispatch(UsersService.unfollowUser(userId)),

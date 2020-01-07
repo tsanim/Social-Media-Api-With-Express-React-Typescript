@@ -4,6 +4,7 @@ import SearchData from "../../SearchData.interface";
 import UsersService from "../../../services/UsersService";
 import Store from "../../Store/Store.interface";
 import { ConnectedProps, connect } from "react-redux";
+import { AppThunkDispatch } from "../../../types";
 
 const mapState = (state: Store) => {
     return {
@@ -12,7 +13,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         search: (data: SearchData) => dispatch(UsersService.searchUser(data))
     }
