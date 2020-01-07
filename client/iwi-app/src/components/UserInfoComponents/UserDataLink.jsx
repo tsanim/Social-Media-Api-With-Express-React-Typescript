@@ -4,10 +4,10 @@ import URI from '../../config/config';
 import PropTypes from 'prop-types';
 
 function UserDataLink(props) {
-    const { _id, imageId, username } = props.user;
+    const { _id, id, imageId, username } = props.user;
 
     return (
-        <Link to={"/profile/" + _id}>
+        <Link to={"/profile/" + (_id ? _id : id)}>
             <img src={`${URI}/feed/image/${imageId}`} alt="userPic" />
             <figcaption>{username}</figcaption>
         </Link>

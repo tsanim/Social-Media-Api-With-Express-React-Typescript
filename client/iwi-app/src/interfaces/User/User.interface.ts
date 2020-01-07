@@ -5,8 +5,8 @@ export interface PlainUser {
     _id: string;
     id?: string;
     username: string;
-    firstNamess: string;
-    lastNamesss: string;
+    firstName: string;
+    lastName: string;
     imageId: string;
     email: string;
     followers: PlainUser[];
@@ -20,8 +20,8 @@ export default interface User extends Immutable.Map<string, any> {
     readonly _id: string;
     readonly id?: string;
     readonly username: string;
-    readonly firstNamess: string;
-    readonly lastNamesss: string;
+    readonly firstName: string;
+    readonly lastName: string;
     readonly imageId: string;
     readonly email: string;
     readonly followers: Immutable.List<User[]>;

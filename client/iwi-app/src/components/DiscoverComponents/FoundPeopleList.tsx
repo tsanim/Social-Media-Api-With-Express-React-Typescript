@@ -3,8 +3,9 @@ import UserCard from './UserCard';
 import WithLoader from '../HOCS/WithLoader';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import FoundPeopleListProps from '../../interfaces/Components/Discover/FoundPeopleListProps.interface';
 
-function FoundPeopleList(props) {
+function FoundPeopleList(props: FoundPeopleListProps) {
     const { foundUsers } = props;
 
     return (

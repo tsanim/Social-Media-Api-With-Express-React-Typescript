@@ -2,8 +2,9 @@ import React from 'react';
 import Comment from './Comment';
 import CommentForm from '../Forms/CommentForm';
 import PropTypes from 'prop-types';
+import CommentsListProps from '../../interfaces/Components/CommentComponents/CommentsListProps.interface';
 
-function CommentsList({ comments, currentUser, postId, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler, makeCommentHandler }) {
+function CommentsList({ comments, currentUser, postId, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler, makeCommentHandler }: CommentsListProps) {
     return (
         <section className="comments">
             <h3>Comments</h3>

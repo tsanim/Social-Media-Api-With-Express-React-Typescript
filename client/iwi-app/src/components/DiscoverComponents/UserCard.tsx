@@ -1,8 +1,9 @@
 import React from 'react';
 import URI from '../../config/config';
 import PropTypes from 'prop-types';
+import UserCardProps from '../../interfaces/Components/Discover/UserCardProps.interface';
 
-function UserCard(props) {
+function UserCard(props: UserCardProps) {
     const { imageId, username, firstName, lastName } = props.user;
 
     return (
