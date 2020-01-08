@@ -2,7 +2,7 @@
 const env = process.env.NODE_ENV || 'development';
 
 //init config object
-import generalConfig from './config/config';
+import generalConfig from './config/config.js';
 
 const config = generalConfig[env];
 
@@ -18,7 +18,9 @@ import { mongoDB } from 'winston-mongodb'
 //init logger
 import logger from './logger/logger';
 
-logger.add(new winston.transports.MongoDB({
+const transports: any = winston.transports;
+
+logger.add(new transports.MongoDB({
     level: 'error',
     db: config.mongoUrl,
     collection: 'logs'
