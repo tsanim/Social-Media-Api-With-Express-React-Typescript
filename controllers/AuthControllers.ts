@@ -6,7 +6,7 @@ import User from '../models/User';
 import jwt from 'jsonwebtoken'
 import cleanUserObj from '../utils/cleanUserObj';
 import config from '../config/config'
-import { validateUser } from './authController';
+import { validateUser } from '../utils/validateUser';
 const env = process.env.NODE_ENV || 'development';
 const jwtSecret = config[env].JWT_SECRET;
 
@@ -23,7 +23,7 @@ export default class AuthController {
         this.router.post('/signIn', validationArrays.signIn, this.signIn);
     }
 
-    signIn(req, res, next) {
+    signIn(req: express.Request, res: express.Response, next: express.NextFunction) {
         //check if validate func return true or false for valid data
         if (validateUser(req, res)) {
             const { email, password } = req.body;
@@ -82,7 +82,7 @@ export default class AuthController {
         }
     }
 
-    signUp(req, res, next) {
+    signUp(req: express.Request, res: express.Response, next: express.NextFunction) {
 
         //check if validate func return true or false for valid data
         if (validateUser(req, res)) {
