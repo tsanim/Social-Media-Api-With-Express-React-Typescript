@@ -2,7 +2,7 @@ import { BaseConfig } from './interfaces/config.interface';
 import generalConfig from './config/config';
 import logger from './logger/logger';
 import App from './App/App';
-import AuthController from './controllers/AuthControllers';
+import AuthController from './controllers/AuthController';
 
 // //init env 
 const env = process.env.NODE_ENV || 'development';
