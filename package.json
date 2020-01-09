@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "tsc": "tsc",
-    "dev": "nodemon index",
+    "dev": "tsnd --respawn --transpileOnly index",
     "heroku-postbuild": "cd client/iwi-app && npm install --only=dev && npm install && npm run build"
   },
   "author": "Tsani Mazalov",
