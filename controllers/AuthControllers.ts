@@ -1,38 +1,29 @@
-const env = process.env.NODE_ENV || 'development';
+import express from 'express';
+import validationArrays from '../utils/ValidationArrays';
+import logger from '../logger/logger';
+import encryption from '../utils/encryption';
+import User from '../models/User';
+import jwt from 'jsonwebtoken'
+import cleanUserObj from '../utils/cleanUserObj';
 import config from '../config/config'
+import { validateUser } from './authController';
+const env = process.env.NODE_ENV || 'development';
 const jwtSecret = config[env].JWT_SECRET;
 
-import User from '../models/User';
-import { validationResult } from 'express-validator/check';
-import jwt from 'jsonwebtoken'
+export default class AuthController {
+    public path = '/auth';
+    public router = express.Router();
 
-import cleanUserObj from '../utils/cleanUserObj';
-import encryption from '../utils/encryption';
-
-import logger from '../logger/logger';
-
-//function for validate data from request
-function validateUser(req, res) {
-    //get errors (if there are) from validationResult func from express-validator 
-    const errors = validationResult(req);
-
-    //if errrors array not empty, then return message to user for incorect data
-    if (!errors.isEmpty()) {
-        logger.log('error', `Validation Error: Entered data is incorrect!`);
-
-        res.status(422).json({
-            message: 'Validation failed, entered data is incorrect',
-            errors: errors.array()
-        });
-
-        return false;
+    constructor() {
+        this.initialiseRoutes();
     }
 
-    return true;
-}
+    public initialiseRoutes() {
+        this.router.post('/signUp', validationArrays.signUp, this.signUp);
+        this.router.post('/signIn', validationArrays.signIn, this.signIn);
+    }
 
-export default {
-    signIn: (req, res, next) => {
+    signIn(req, res, next) {
         //check if validate func return true or false for valid data
         if (validateUser(req, res)) {
             const { email, password } = req.body;
@@ -89,8 +80,9 @@ export default {
                     next(error);
                 })
         }
-    },
-    signUp: (req, res, next) => {
+    }
+
+    signUp(req, res, next) {
 
         //check if validate func return true or false for valid data
         if (validateUser(req, res)) {
@@ -127,6 +119,5 @@ export default {
                     next(err);
                 })
         }
-    },
-
+    }
 }

@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
-
 mongoose.Promise = global.Promise;
 import User from '../models/User';
+import { BaseConfig } from '../interfaces/config.interface';
+import { Logger } from 'winston';
 
-export default ({ mongoUrl }, logger) => {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+export default ({ mongoUrl }: BaseConfig, logger: Logger) => {
+    mongoose.connect(mongoUrl as string, { useNewUrlParser: true, useUnifiedTopology: true });
 
     const db = mongoose.connection;
 

@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
+import Config from '../interfaces/config.interface';
 
 dotenv.config();
 
-export default {
+const config: Config = {
     development: {
         port: process.env.PORT || 9999,
         mongoUrl: process.env.DB_URI,
@@ -18,3 +19,5 @@ export default {
         socketPORT: 8888
     }
 }
+
+export default config;
