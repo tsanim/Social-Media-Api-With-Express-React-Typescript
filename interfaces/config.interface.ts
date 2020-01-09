@@ -9,4 +9,5 @@ export interface BaseConfig {
 export default interface Config {
     development: BaseConfig;
     production: BaseConfig;
+    [name: string]: BaseConfig;
 }
