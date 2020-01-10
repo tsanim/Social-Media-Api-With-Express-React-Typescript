@@ -1,44 +1,79 @@
-import { validationResult } from 'express-validator/check';
-import mongoose from 'mongoose';
+import express from "express";
+import isAuth from "../middlewares/isAuth";
+import logger from "../logger/logger";
+import User from "../models/User";
+import Post from "../models/Post";
+import Comment from "../models/Comment";
 
-const conn = mongoose.connection;
+export default class CommentsController {
+    public path = '/feed';
+    public router = express.Router();
 
-//Models
-import Post from '../models/Post';
-import User from '../models/User';
-import Comment from '../models/Comment';
-import logger from '../logger/logger';
+    constructor() {
+        this.intitializeRoutes();
+    }
 
-export default {
-    getImage: (req, res, next) => {
+    private intitializeRoutes() {
+        this.router.post('/comments/create', isAuth, this.createComment);
+        this.router.put('/comments/like/:commentId', isAuth, this.likeComment);
+        this.router.put('/comments/dislike/:commentId', isAuth, this.dislikeComment);
+        this.router.get('/comments/likes/:commentId', this.getCommentLikes);
+        this.router.delete('/comments/delete/:commentId', isAuth, this.deleteComment);
+    }
 
-        //init fs bucket from mongo
-        const bucket = new mongoose.mongo.GridFSBucket(conn.db);
+    private async createComment(req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            //init comment data fromr req body
+            const { text, postId } = req.body;
 
-        //get image id with req params from db
-        let id = new mongoose.mongo.ObjectID(req.params.imageId);
+            logger.log('debug', `Comment post request body post id: ${postId}, comment text: ${text}`);
 
-        //init download stream
-        let downloadStream = bucket.openDownloadStream(id);
+            //if text is empty string then return error
+            if (text === '' || !text) {
+                let error = new Error('You can not make comment without text!')
+                error.statusCode = 500;
 
-        //when stream trigger 'data' event , write givven chunk to response
-        downloadStream.on('data', (chunk) => {
-            res.write(chunk);
-        });
+                throw error;
+            }
 
-        //when stream trigger 'error' event , return message that image is not found
-        downloadStream.on('error', () => {
-            logger.log('error', 'Image error. Image not found')
+            //find user by req user id prop from decoded token
+            const user = await User.findById(req.userId);
 
-            res.status(404).json({ message: 'Image not found!' });
-        });
+            //find post by id
+            let post = await Post.findById(postId);
 
-        //when stream trigger 'end' event, end res
-        downloadStream.on('end', () => {
-            res.end();
-        });
-    },
-    likeComment: async (req, res, next) => {
+            //create comment
+            let comment = await Comment.create({ text, creator: req.userId, post: postId });
+            comment = await comment.populate('creator').execPopulate();
+
+            user.comments.push(comment._id);
+            user.save();
+
+            //update post's comments array like push new comment id
+            post.comments.push(comment._id);
+
+            post = await post.populate('creator').populate('comments').populate('likes').populate({
+                path: 'comments',
+                populate: {
+                    path: 'creator',
+                }
+            }).execPopulate();
+
+            post.save();
+
+            logger.log('info', 'Comment created succesfully!');
+
+            res.status(201).json({ message: 'Comment created succesfully!', post });
+        } catch (error) {
+            if (!error.statuCode) {
+                error.statuCode = 500;
+            }
+
+            next(error);
+        }
+    }
+
+    private async likeComment(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get comment id from req params
             const { commentId } = req.params;
@@ -81,8 +116,9 @@ export default {
 
             next(error);
         }
-    },
-    dislikeComment: async (req, res, next) => {
+    }
+
+    private async dislikeComment(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get comment id from req params
             const { commentId } = req.params;
@@ -129,8 +165,9 @@ export default {
 
             next(error);
         }
-    },
-    getCommentLikes: async (req, res, next) => {
+    }
+
+    private async getCommentLikes(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const { commentId } = req.params;
 
@@ -147,66 +184,16 @@ export default {
 
             next(error);
         }
-    },
-    createComment: async (req, res, next) => {
-        try {
-            //init comment data fromr req body
-            const { text, postId } = req.body;
+    }
 
-            logger.log('debug', `Comment post request body post id: ${postId}, comment text: ${text}`);
-
-            //if text is empty string then return error
-            if (text === '') {
-                let error = new Error('You can not make comment without text!')
-                error.statusCode = 500;
-
-                throw error;
-            }
-
-            //find user by req user id prop from decoded token
-            const user = await User.findById(req.userId);
-
-            //find post by id
-            let post = await Post.findById(postId);
-
-            //create comment
-            let comment = await Comment.create({ text, creator: req.userId, post: postId });
-            comment = await comment.populate('creator').execPopulate();
-
-            user.comments.push(comment._id);
-            user.save();
-
-            //update post's comments array like push new comment id
-            post.comments.push(comment._id);
-
-            post = await post.populate('creator').populate('comments').populate('likes').populate({
-                path: 'comments',
-                populate: {
-                    path: 'creator',
-                }
-            }).execPopulate();
-
-            post.save();
-
-            logger.log('info', 'Comment created succesfully!');
-
-            res.status(201).json({ message: 'Comment created succesfully!', post });
-        } catch (error) {
-            if (!error.statuCode) {
-                error.statuCode = 500;
-            }
-
-            next(error);
-        }
-    },
-    deleteComment: (req, res, next) => {
+    private deleteComment(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get comment id from req params
             const { commentId } = req.params;
 
             logger.log('debug', `Request paramas to comment delete: comment id ${commentId}!`);
             
-            Comment.findByIdAndDelete(commentId, async (err, comment) => {
+            Comment.findByIdAndDelete(commentId, async (err: any, comment) => {
                 if (err) {
                     if (!err.statuCode) {
                         err.statuCode = 500;
