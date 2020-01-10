@@ -80,7 +80,8 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
             method: 'get',
             url: `${URI}/feed/posts/likes/${_id}`,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Api ' + localStorage.getItem('token')
             },
             onSuccess: (data: any) => {
                 setLikers(() => data.likes);
