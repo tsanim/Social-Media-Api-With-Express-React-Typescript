@@ -1,13 +1,13 @@
-const env = process.env.NODE_ENV || 'development';
-
+import express from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config'
+const env = process.env.NODE_ENV || 'development';
 const jwtSecret = config[env].JWT_SECRET;
 
 //init logger
 import logger from '../logger/logger'
 
-export default  (req, res, next) => {
+export default  (req: express.Request, res: express.Response, next: express.NextFunction) => {
   //get request header for authorization
   const authHeaders = req.get('Authorization');
 

@@ -18,7 +18,7 @@ export default class AuthController {
         this.initialiseRoutes();
     }
 
-    public initialiseRoutes() {
+    private initialiseRoutes() {
         this.router.post('/signUp', validationArrays.signUp, this.signUp);
         this.router.post('/signIn', validationArrays.signIn, this.signIn);
     }
