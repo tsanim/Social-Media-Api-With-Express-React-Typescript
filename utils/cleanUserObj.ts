@@ -1,7 +1,9 @@
+import IUser from "../interfaces/models/User.interface";
+
 //clean user object 
-export default  (user) => {
+export default  (user: IUser) => {
     //assign user from params to new object
-    const newUser = Object.assign({}, user);
+    const newUser: IUser = Object.assign({}, user);
 
     //remove unneed props from user object
     delete newUser.hashedPassword;
