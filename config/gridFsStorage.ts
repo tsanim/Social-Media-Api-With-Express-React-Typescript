@@ -9,9 +9,9 @@ import path from 'path';
 
 export default  new GridFsStorage({
     url: mongoUrl,
-    file: (req, file) => {
+    file: (req: Express.Request, file: Express.Multer.File) => {
         return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
+            crypto.randomBytes(16, (err: any, buf: any) => {
                 if (err) {
                     return reject(err);
                 }
