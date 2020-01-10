@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import './App.css';
 
 import Header from './components/App/common/Header/Header';
@@ -23,8 +22,7 @@ import { connector, AppProps } from './interfaces/Components/AppProps.interface'
 
 class App extends Component<AppProps> {
   timer: number;
-
-  signoutHandler() {
+  signoutHandler = () => {
     this.props.signout();
     this.props.resetUserPosts();
   }
