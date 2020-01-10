@@ -1,19 +1,20 @@
 import { Document } from "mongoose";
 import IPost from "./Post.interface";
 import IComment from "./Comment.interface";
+import INotification from "./Notification.interface";
 
 export default interface IUser extends Document {
     username: string;
     email: string;
-    notifications: string[];
+    notifications: INotification['_id'][];
     firstName: string;
     lastName: string;
     imageId: string;
     hashedPassword: string;
     salt: string;
-    followers: IUser[] | IUser['_id'];
-    subscriptions: IUser[] | IUser['_id'];
+    followers: IUser['_id'][];
+    subscriptions: IUser['_id'][];
     roles: string[];
-    posts: IPost[] | IPost['_id'];
-    comments: IComment[] | IComment['_id'];
+    posts: IPost['_id'][];
+    comments: IComment['_id'][];
 }
