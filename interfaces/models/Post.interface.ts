@@ -1,6 +1,7 @@
 import IUser from "./User.interface";
+import { Document } from "mongoose";
 
-export default interface IPost {
+export default interface IPost extends Document {
     creator: IUser['_id'],
     text: string;
     date: string;
