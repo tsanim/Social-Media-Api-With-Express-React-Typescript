@@ -5,7 +5,9 @@ import Post from '../models/Post';
 import User from '../models/User';
 import multer from 'multer';
 import validatePost from '../utils/validatePost';
-import mongoose from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
+import Comment from '../models/Comment';
+const conn: Connection = mongoose.connection;
 
 class PostsController {
     public path = '/feed';
