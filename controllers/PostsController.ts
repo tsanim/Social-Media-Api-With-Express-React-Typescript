@@ -5,6 +5,7 @@ import Post from '../models/Post';
 import User from '../models/User';
 import multer from 'multer';
 import validatePost from '../utils/validatePost';
+import mongoose from 'mongoose';
 
 class PostsController {
     public path = '/feed';
@@ -12,10 +13,10 @@ class PostsController {
     private upload = multer({ storage: this.storage });
 
     constructor(public storage: any) {
-        this.initialiseRoutes();
+        this.initializeRoutes();
     }
 
-    private initialiseRoutes() {
+    private initializeRoutes() {
         this.router.get('/searchPosts', isAuth, this.searchPosts);
         this.router.get('/posts/:userId', isAuth, this.getAllUserPosts);
         this.router.get('/posts', isAuth, this.getAllUserSubsPosts);
