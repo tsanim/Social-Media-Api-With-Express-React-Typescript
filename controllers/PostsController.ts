@@ -7,6 +7,7 @@ import multer from 'multer';
 import validatePost from '../utils/validatePost';
 import mongoose, { Connection } from 'mongoose';
 import Comment from '../models/Comment';
+import IPost from '../interfaces/models/Post.interface';
 const conn: Connection = mongoose.connection;
 
 class PostsController {
@@ -107,7 +108,7 @@ class PostsController {
             //init req body obj
             const reqBody = req.body;
 
-            logger.log('debug', `Post editted body.`, ...reqBody);
+            logger.log('debug', `Post editted body.`);
 
             //get post id from req params prop
             const { postId } = req.params;
@@ -229,10 +230,10 @@ class PostsController {
                 //init req body
                 const reqBody = req.body;
 
-                logger.log('debug', `Post created with requests body.`, ...reqBody);
+                logger.log('debug', `Post created with requests body.`);
 
                 //assign req body object with object that contain post creator to new post object
-                const newPost = Object.assign({}, reqBody, { creator: req.userId });
+                const newPost: IPost = Object.assign({}, reqBody, { creator: req.userId });
 
                 //if there is no text or file - send message to user that he can not upload post with empty data
                 if (reqBody.text && reqBody.text === '' && !req.file) {
@@ -256,15 +257,14 @@ class PostsController {
                 //populate creator and likes
                 post = await post.populate('creator').populate('likes').execPopulate();
                 //find user that are creator to push new post to his posts array
-                const user = await User.findById(post.creator).populate('post');
+                let user = await User.findById(post.creator);
 
                 user.posts.push(post._id);
                 user.save();
 
-                logger.log('info', `Post (Id: ${post._id}, creatorId: ${post.creatorId}) is created!`);
+                logger.log('info', `Post (Id: ${post._id}, creatorId: ${post.creator}) is created!`);
 
                 res.status(201).json({ message: 'Post is created succesfully!', post });
-
             } catch (error) {
                 if (!error.statusCode) {
                     error.statusCode = 500;
