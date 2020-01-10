@@ -14,9 +14,9 @@ export default ({ mongoUrl }: BaseConfig, logger: Logger) => {
 
         //Seed Admin with once open database
         User.seedAdmin()
-            .then(user => {
+            .then(()=> {
                 console.log('Database is ready!');
-            }).catch(err => {
+            }).catch((err: any) => {
                 logger.log('error', `User seed admin error.`, ...err);
             });
     });
