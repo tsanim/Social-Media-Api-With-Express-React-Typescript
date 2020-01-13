@@ -1,5 +1,5 @@
 import { BaseConfig } from './interfaces/config.interface';
-import generalConfig from './config/config';
+import Configuration from './config/Configuration';
 import logger from './logger/logger';
 import App from './App/App';
 import AuthController from './controllers/AuthController';
@@ -12,7 +12,7 @@ import UsersController from './controllers/UsersController';
 //init env 
 const env = process.env.NODE_ENV || 'development';
 
-const config: BaseConfig = generalConfig[env];
+const configuration = new Configuration(env);
 
 const app = new App([
     new AuthController(),
@@ -20,6 +20,6 @@ const app = new App([
     new CommentsController(),
     new UsersController(storage),
     new FileController()
-], config, logger);
+], configuration.environmentConfig, logger);
 
 app.listen();
