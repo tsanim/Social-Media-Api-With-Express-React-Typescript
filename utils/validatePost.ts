@@ -3,7 +3,7 @@ import express from 'express';
 import logger from "../logger/logger";
 
 //function for validate post data from request
-export default function validatePost(req: express.Request, res: express.Response) {
+export default function validatePost(req: express.Request, res: express.Response): boolean {
     //get errors (if there are) from validationResult func from express-validator 
     const errors = validationResult(req);
 

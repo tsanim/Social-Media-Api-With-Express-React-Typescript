@@ -3,7 +3,7 @@ import logger from '../logger/logger';
 import express from 'express';
 
 //function for validate data from request
-export function validateUser(req: express.Request, res: express.Response) {
+export function validateUser(req: express.Request, res: express.Response): boolean {
     //get errors (if there are) from validationResult func from express-validator 
     const errors = validationResult(req);
 

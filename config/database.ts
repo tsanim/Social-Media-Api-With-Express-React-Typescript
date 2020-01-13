@@ -4,7 +4,7 @@ import User from '../models/User';
 import { BaseConfig } from '../interfaces/config.interface';
 import { Logger } from 'winston';
 
-export default ({ mongoUrl }: BaseConfig, logger: Logger) => {
+export default ({ mongoUrl }: BaseConfig, logger: Logger): void => {
     mongoose.connect(mongoUrl as string, { useNewUrlParser: true, useUnifiedTopology: true });
 
     const db = mongoose.connection;

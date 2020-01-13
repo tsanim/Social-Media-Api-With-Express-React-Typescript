@@ -3,7 +3,7 @@ import logger from '../logger/logger';
 import path from 'path';
 import express from 'express';
 
-export default (app: express.Application) => {
+export default (app: express.Application): void => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true

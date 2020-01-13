@@ -1,7 +1,7 @@
 import IUser from "../interfaces/models/User.interface";
 
 //clean user object 
-export default  (user: IUser) => {
+export default  (user: IUser): IUser => {
     //assign user from params to new object
     const newUser: IUser = Object.assign({}, user);
 
