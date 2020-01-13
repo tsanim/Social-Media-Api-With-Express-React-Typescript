@@ -4,6 +4,7 @@ import IComment from "./Comment.interface";
 import INotification from "./Notification.interface";
 
 export default interface IUser extends Document {
+    _doc?: any;
     username: string;
     email: string;
     notifications: INotification['_id'][];
@@ -17,4 +18,6 @@ export default interface IUser extends Document {
     roles: string[];
     posts: IPost['_id'][];
     comments: IComment['_id'][];
+    room?: string;
+    authenticate: (password: string) => boolean;
 }
