@@ -1,14 +1,14 @@
-const env = process.env.NODE_ENV || 'development';
 
-import GridFsStorage from 'multer-gridfs-storage'
-import config from './config'
-const { mongoUrl } = config[env];
-
+import GridFsStorage from 'multer-gridfs-storage';
+import Configuration from './Configuration';
 import crypto from 'crypto';
 import path from 'path';
 
+const env = process.env.NODE_ENV || 'development';
+const config = new Configuration(env);
+
 export default  new GridFsStorage({
-    url: mongoUrl,
+    url: config.environmentConfig.mongoUrl,
     file: (req: Express.Request, file: Express.Multer.File) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err: any, buf: any) => {

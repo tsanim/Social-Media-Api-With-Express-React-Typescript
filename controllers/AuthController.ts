@@ -1,14 +1,14 @@
 import express from 'express';
 import validationArrays from '../utils/ValidationArrays';
 import logger from '../logger/logger';
-import encryption from '../utils/encryption';
+import Encryption from '../utils/Encryption';
 import User from '../models/User';
 import jwt from 'jsonwebtoken'
 import cleanUserObj from '../utils/cleanUserObj';
-import config from '../config/config'
+import Configuration from '../config/Configuration'
 import { validateUser } from '../utils/validateUser';
 const env = process.env.NODE_ENV || 'development';
-const jwtSecret = config[env].JWT_SECRET;
+const config = new Configuration(env);
 
 export default class AuthController {
     public path = '/auth';
@@ -49,7 +49,6 @@ export default class AuthController {
 
                         throw error;
                     }
-
                     //if check from user method return false , then send message for invalid password
                     if (!user.authenticate(password)) {
                         const error = new Error('Invalid password');
@@ -63,7 +62,7 @@ export default class AuthController {
                         email: user.email,
                         userId: user._id
                     },
-                        jwtSecret);
+                        config.environmentConfig.JWT_SECRET);
 
                     logger.log('info', `User (Id: ${user._id}, email: ${user.email}) is succesfully logged in!`);
 
@@ -92,10 +91,10 @@ export default class AuthController {
             logger.log('debug', `Register body: username - ${username}, email - ${email}, firstName - ${firstName}, lastName - ${lastName}`);
 
             //generate salt 
-            const salt = encryption.generateSalt();
+            const salt = Encryption.generateSalt();
 
             //generate hashed pass 
-            const hashedPassword = encryption.generateHashedPassword(salt, password);
+            const hashedPassword = Encryption.generateHashedPassword(salt, password);
 
             //create new user
             User.create({

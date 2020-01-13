@@ -1,11 +1,11 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import config from '../config/config'
-const env = process.env.NODE_ENV || 'development';
-const jwtSecret = config[env].JWT_SECRET;
-
+import Configuration from '../config/Configuration';
 //init logger
 import logger from '../logger/logger'
+
+const env = process.env.NODE_ENV || 'development';
+const config = new Configuration(env);
 
 export default  (req: express.Request, res: express.Response, next: express.NextFunction) => {
   //get request header for authorization
@@ -27,7 +27,7 @@ export default  (req: express.Request, res: express.Response, next: express.Next
 
   try {
     //verify token from header so we can see if user is authenticated
-    decodedToken = jwt.verify(token, jwtSecret);
+    decodedToken = jwt.verify(token, config.environmentConfig.JWT_SECRET);
   } catch (error) {
     logger.log('error', `Token is invalid!`);
 

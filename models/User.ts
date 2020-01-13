@@ -1,12 +1,11 @@
-const env = process.env.NODE_ENV || 'development';
-
 import mongoose, { Schema, Model } from 'mongoose';
-import encryption from '../utils/encryption';
-import config from '../config/config';
+import Encryption from '../utils/Encryption';
+import Configuration from '../config/Configuration';
 import IUser from '../interfaces/models/User.interface';
 import UserModel from '../interfaces/models/UserModel';
+const env = process.env.NODE_ENV || 'development';
 
-const { defaultUserImage } = config[env];
+const config = new Configuration(env);
 
 const userSchema: Schema = new Schema({
     username: { type: Schema.Types.String, required: true },
@@ -14,7 +13,7 @@ const userSchema: Schema = new Schema({
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
     firstName: { type: Schema.Types.String, required: true },
     lastName: { type: Schema.Types.String, required: true },
-    imageId: { type: Schema.Types.ObjectId, default: new mongoose.mongo.ObjectID(defaultUserImage) },
+    imageId: { type: Schema.Types.ObjectId, default: new mongoose.mongo.ObjectID(config.environmentConfig.defaultUserImage) },
     hashedPassword: { type: Schema.Types.String, required: true },
     salt: { type: Schema.Types.String, required: true },
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
@@ -27,7 +26,7 @@ const userSchema: Schema = new Schema({
 //add schema method for authenticate to check if hashed pass is valid
 userSchema.method({
     authenticate: function (password: string) {
-        const currentHashedPass = encryption.generateHashedPassword(this.salt, password);
+        const currentHashedPass = Encryption.generateHashedPassword(this.salt, password);
 
         return currentHashedPass === this.hashedPassword;
     }
@@ -39,8 +38,8 @@ userSchema.statics.seedAdmin = async () => {
         const users: IUser[] = await User.find({});
         if (users.length > 0) return;
 
-        const salt = encryption.generateSalt();
-        const hashedPassword = encryption.generateHashedPassword(salt, 'Admin');
+        const salt = Encryption.generateSalt();
+        const hashedPassword = Encryption.generateHashedPassword(salt, 'Admin');
 
         return User.create({
             username: 'Admin',

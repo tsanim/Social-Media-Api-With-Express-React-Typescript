@@ -1,21 +1,20 @@
 import express from "express";
 import isAuth from "../middlewares/isAuth";
-import generalConfig from '../config/config';
+import Configuration from '../config/Configuration';
 import validationArrays from "../utils/ValidationArrays";
 import multer from 'multer';
 import User from "../models/User";
 import mongoose, { Connection } from "mongoose";
 import logger from "../logger/logger";
 import { validateUser } from "../utils/validateUser";
-import encryption from "../utils/encryption";
+import Encryption from "../utils/Encryption";
 import pushInUserArray from "../utils/pushInUserarray";
 import filterUserArray from "../utils/fitlerUserArray";
-import { BaseConfig } from "../interfaces/config.interface";
 
 const conn: Connection = mongoose.connection;
-const env = process.env.NODE_ENV || 'development';
 
-const config: BaseConfig = generalConfig[env];
+const env = process.env.NODE_ENV || 'development';
+const config = new Configuration(env);
 
 export default class UsersController {
     public path = '/user';
@@ -115,7 +114,7 @@ export default class UsersController {
 
             //delete the photo before upload with the aim to reduce old files in db
             if (req.file) {
-                if (config.defaultUserImage !== user.imageId.toString()) {
+                if (config.environmentConfig.defaultUserImage !== user.imageId.toString()) {
                     const bucket = new mongoose.mongo.GridFSBucket(conn.db);
 
                     let id = new mongoose.mongo.ObjectID(user.imageId);
@@ -124,7 +123,7 @@ export default class UsersController {
                 }
 
                 //update user with new image id
-                User.findByIdAndUpdate(userId, { imageId: req.file.id }, { new: true, useFindAndModify: false }, (error, userDoc) => {
+                User.findByIdAndUpdate(userId, { imageId: req.file.id }, { new: true, useFindAndModify: false }, (error: any, userDoc: any) => {
                     if (error) {
                         error.statusCode = 500;
 
@@ -194,7 +193,7 @@ export default class UsersController {
                 const reqBody = req.body;
 
                 //update user info with req body object that contains all new user info
-                User.findByIdAndUpdate(userId, reqBody, { new: true, useFindAndModify: false }, (error, userDoc) => {
+                User.findByIdAndUpdate(userId, reqBody, { new: true, useFindAndModify: false }, (error: any, userDoc: any) => {
                     if (error) {
                         error.statusCode = 500;
 
@@ -511,8 +510,8 @@ export default class UsersController {
                 throw error;
             }
 
-            const newSalt = encryption.generateSalt();
-            const newHashedPassword = encryption.generateHashedPassword(newSalt, newPassword);
+            const newSalt = Encryption.generateSalt();
+            const newHashedPassword = Encryption.generateHashedPassword(newSalt, newPassword);
 
             //init new updated user obj with new salt and hashed pass
             let updatedUser = Object.assign({}, {
