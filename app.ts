@@ -1,4 +1,3 @@
-import { BaseConfig } from './interfaces/config.interface';
 import Configuration from './config/Configuration';
 import logger from './logger/logger';
 import App from './App/App';
