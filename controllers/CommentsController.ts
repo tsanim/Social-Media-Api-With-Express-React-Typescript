@@ -5,8 +5,9 @@ import User from "../models/User";
 import Post from "../models/Post";
 import Comment from "../models/Comment";
 import RequestCustom from "../interfaces/RequestCustom.interface";
+import Controller from "../interfaces/Controller.interface";
 
-export default class CommentsController {
+export default class CommentsController implements Controller {
     public path = '/feed';
     public router = express.Router();
 
