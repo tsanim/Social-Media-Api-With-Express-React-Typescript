@@ -1,7 +1,7 @@
-import User from "../../User/User.interface";
+import User, { PlainUser } from "../../User/User.interface";
 
 export default interface UserProfileState {
-    showModal: boolean,
-    users: User[],
-    modalHeaderName: string
+    showModal: boolean;
+    users: PlainUser[];
+    modalHeaderName: string;
 }

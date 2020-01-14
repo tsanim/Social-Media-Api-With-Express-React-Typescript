@@ -3,6 +3,7 @@ import { RegisterUser, LoginUser } from "../../User/AuthUser.interface";
 import { connect, ConnectedProps } from "react-redux";
 import AuthService from "../../../services/AuthService";
 import { resetErrors } from "../../../store/actions/errorsActions/actionsCreator";
+import { AppThunkDispatch } from "../../../types";
 
 const mapState = (state: Store) => {
     return {
@@ -11,7 +12,7 @@ const mapState = (state: Store) => {
 }
 
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         register: (data: RegisterUser) => dispatch(AuthService.registerUser(data)),
         resetErrors: () => dispatch(resetErrors()),

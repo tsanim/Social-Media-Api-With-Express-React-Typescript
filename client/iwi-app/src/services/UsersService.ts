@@ -9,10 +9,12 @@ import httpRequest from '../utils/httpRequest';
 import SearchData from '../interfaces/SearchData.interface';
 import RequestOptions from '../interfaces/RequestOptions.interface';
 import { EditUserInformation, ChangePassword } from '../interfaces/Components/EditUserInformation/EditUserInfoProps.interface';
+import { AppDispatch } from '..';
+import { ThunkResult } from '../types';
 
 export default class UsersService {
-    static searchUser({ searchText }: SearchData) {
-        return (dispatch: any) => {
+    static searchUser({ searchText }: SearchData): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -31,8 +33,8 @@ export default class UsersService {
         }
     }
     
-    static getUser(userId: string) {
-        return (dispatch: any) => {
+    static getUser(userId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -52,8 +54,8 @@ export default class UsersService {
         }
     }
     
-    static followUser(userId: string) {
-        return (dispatch: any) => {
+    static followUser(userId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -73,8 +75,8 @@ export default class UsersService {
         }
     }
     
-    static unfollowUser(userId: string) {
-        return (dispatch: any) => {
+    static unfollowUser(userId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -94,8 +96,8 @@ export default class UsersService {
         }
     }
     
-    static editUserInfo(userData: EditUserInformation) {
-        return (dispatch: any) => {
+    static editUserInfo(userData: EditUserInformation): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -117,8 +119,8 @@ export default class UsersService {
         }
     }
     
-    static changeUserPic(userPic: { avatar: File }) {
-        return async (dispatch: any) => {
+    static changeUserPic(userPic: { avatar: File }): ThunkResult<Promise<any>> {
+        return async (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -138,8 +140,8 @@ export default class UsersService {
         }
     }
     
-    static changePassword(passData: ChangePassword) {
-        return (dispatch: any) => {
+    static changePassword(passData: ChangePassword): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -150,7 +152,7 @@ export default class UsersService {
                     'Content-Type': 'application/json',
                     'Authorization': 'Api ' + localStorage.getItem('token')
                 },
-                onSuccess: (data) => {
+                onSuccess: () => {
                 },
                 onError: (error) => {
                     dispatch(errorsActions.fetchError(error));

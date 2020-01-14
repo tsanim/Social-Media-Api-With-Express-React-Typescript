@@ -3,14 +3,13 @@ import calcTime from '../../utils/calcTime';
 import DeleteModal from '../Modals/DeleteModal';
 import EditFeedForm from '../Forms/EditFeedForm';
 import URI from '../../config/config';
-import Modal from '../Modals/Modal';
+import Modal from '../Modals/UserModal';
 import UserDataLink from '../UserInfoComponents/UserDataLink';
 import PostBtnsBar from './PostBtnsBar';
 import PostMeta from './PostMeta';
 import httpRequest from '../../utils/httpRequest';
 import PropTypes from 'prop-types';
 import PostProps from '../../interfaces/Components/PostComponents/PostProps.interface';
-import { PlainUser } from '../../interfaces/User/User.interface';
 import { PlainPost } from '../../interfaces/Feed/Post.interface';
 
 function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePostHandler, likeCommentHandler, dislikeCommentHandler, deleteCommentHandler, makeCommentHandler, editUserPostHandler }: PostProps) {
@@ -56,11 +55,11 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
     }
 
     const handleShowModal = () => {
-        setShowDeleteModal((showDeleteModal) => true);
+        setShowDeleteModal(() => true);
     }
 
     const handleShowLikesModal = () => {
-        setShowLikesPeopleModal((showLikesPeopleModal) => true);
+        setShowLikesPeopleModal(() => true);
     }
 
     const handleShowEditForm = () => {
@@ -68,7 +67,7 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
     }
 
     const handleClose = () => {
-        setShowDeleteModal((showDeleteModal) => false);
+        setShowDeleteModal(() => false);
         setShowLikesPeopleModal(() => false);
     }
 
@@ -81,7 +80,8 @@ function Post({ post, currentUser, likePostHandler, dislikePostHandler, deletePo
             method: 'get',
             url: `${URI}/feed/posts/likes/${_id}`,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Api ' + localStorage.getItem('token')
             },
             onSuccess: (data: any) => {
                 setLikers(() => data.likes);

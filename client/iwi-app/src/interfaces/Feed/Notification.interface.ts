@@ -1,4 +1,5 @@
 export default interface Notification {
-    messages: string;
+    _id: string;
+    message: string;
     sender: string
 }

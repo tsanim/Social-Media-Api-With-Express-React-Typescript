@@ -6,7 +6,7 @@ import { Detector } from "react-detect-offline";
 import PropTypes from 'prop-types';
 
 import URI from '../../../../config/config';
-import Dropdown from '../../../Dropdown/Dropdown';
+import Dropdown from '../../../Dropdown/NotificationsDropdown';
 import HeaderProps from '../../../../interfaces/Components/Header/HeaderProps.interface';
 
 function Nav(props: HeaderProps) {

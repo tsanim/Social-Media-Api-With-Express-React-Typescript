@@ -5,7 +5,8 @@ import Store from "../../Store/Store.interface";
 import PostsService from "../../../services/PostsService";
 import CommentsService from "../../../services/CommentsService";
 import { connect, ConnectedProps } from "react-redux";
-import Comment from "../../Feed/CommentData.interface";
+import CommentData from "../../Feed/CommentData.interface";
+import { AppThunkDispatch } from "../../../types";
 
 export function filterHomePosts(state: Store) {
     return state.postsReducer.get('posts').filter((post: Post) => {
@@ -27,7 +28,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         getUserPosts: (id: string) => dispatch(PostsService.getUserPosts(id)),
         getSubsPosts: () => dispatch(PostsService.getAllSubsPosts()),
@@ -39,7 +40,7 @@ const mapDispatch = (dispatch: any) => {
         likeCom: (_id: string) => dispatch(CommentsService.likeComment(_id)),
         dislikeCom: (_id: string) => dispatch(CommentsService.dislikeComment(_id)),
         deleteCom: (_id: string) => dispatch(CommentsService.deleteComment(_id)),
-        makeCom: (data: Comment) => dispatch(CommentsService.makeComment(data))
+        makeCom: (data: CommentData) => dispatch(CommentsService.makeComment(data))
     }
 }
 

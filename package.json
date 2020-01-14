@@ -4,6 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
+    "tsc": "tsc",
+    "dev": "tsnd --respawn --transpileOnly index",
     "heroku-postbuild": "cd client/iwi-app && npm install --only=dev && npm install && npm run build"
   },
   "author": "Tsani Mazalov",
@@ -12,6 +14,27 @@
     "./node_modules"
   ],
   "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-typescript": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@types/babel-core": "^6.25.6",
+    "@types/body-parser": "^1.17.1",
+    "@types/debug": "^4.1.5",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.2",
+    "@types/express-validator": "^3.0.0",
+    "@types/gridfs-stream": "^0.5.32",
+    "@types/http-errors": "^1.6.3",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/mongoose": "^5.5.39",
+    "@types/multer": "^1.3.10",
+    "@types/multer-gridfs-storage": "^4.0.0",
+    "@types/node": "^13.1.4",
+    "@types/nodemon": "^1.19.0",
+    "@types/query-string": "^6.3.0",
+    "@types/socket.io": "^2.1.4",
+    "@types/winston": "^2.4.4",
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
     "debug": "~2.6.9",
@@ -26,10 +49,11 @@
     "mongoose": "^5.6.3",
     "multer": "^1.4.1",
     "multer-gridfs-storage": "^3.2.3",
-    "nodemon": "^1.19.2",
+    "nodemon": "^1.19.4",
     "path": "^0.12.7",
     "query-string": "^6.8.1",
     "socket.io": "^2.3.0",
+    "typescript": "^3.7.4",
     "winston": "^3.2.1",
     "winston-mongodb": "^5.0.1"
   },
@@ -37,11 +61,16 @@
     "node": "10.14.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/register": "^7.7.7",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0"
-  }
+    "ts-node": "^8.5.4",
+    "ts-node-dev": "^1.0.0-pre.44"
+  },
+  "type": "module"
 }

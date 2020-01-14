@@ -59,7 +59,7 @@ export class PostForm extends React.Component<PostFormProps, PostFormState> {
             });
         } else {
             fd.append('text', this.state.text);
-            this.props.uploadHandler(fd)
+            this.props.uploadHandler(fd);
         }
 
         //reset state

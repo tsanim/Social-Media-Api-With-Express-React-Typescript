@@ -1,7 +1,7 @@
-import Comment from "../../Feed/CommentData.interface";
+import CommentData from "../../Feed/CommentData.interface";
 
 export default interface CommentFormProps {
     postId: string;
-    makeCommentHandler: (data: Comment) => void;
+    makeCommentHandler: (data: CommentData) => void;
     createSnackbar: (data: any) => void;
 }

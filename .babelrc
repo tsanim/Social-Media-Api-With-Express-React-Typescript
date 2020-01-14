@@ -1,3 +1,10 @@
 {
-    "presets": ["es2015", "stage-2"]
-  }
+    "presets": [["@babel/preset-env", {
+        "targets": { 
+            "node": 12
+        }
+    }], "@babel/preset-typescript"],
+    "plugins": [
+        "@babel/plugin-transform-typescript"
+    ]
+}

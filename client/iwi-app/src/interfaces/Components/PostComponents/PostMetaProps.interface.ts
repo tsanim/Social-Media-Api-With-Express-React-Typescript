@@ -1,5 +1,6 @@
 import { PlainUser } from "../../User/User.interface";
-import Comment from "../../Feed/CommentData.interface";
+import CommentData from "../../Feed/CommentData.interface";
+import Comment from "../../Feed/Comment.interface";
 
 export default interface PostMetaProps {
     handleShowLikesModal: () => void;
@@ -13,5 +14,5 @@ export default interface PostMetaProps {
     likeCommentHandler: (commentId: string) => void;
     dislikeCommentHandler: (commentId: string) => void;
     deleteCommentHandler: (commentId: string) => void;
-    makeCommentHandler: (data: Comment) => void;
+    makeCommentHandler: (data: CommentData) => void;
 }

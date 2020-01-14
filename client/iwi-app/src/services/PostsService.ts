@@ -7,10 +7,12 @@ import httpRequest from '../utils/httpRequest';
 import PostData from '../interfaces/Feed/PostData.interface';
 import RequestOptions from '../interfaces/RequestOptions.interface';
 import SearchData from '../interfaces/SearchData.interface';
+import { ThunkResult } from '../types';
+import { AppDispatch } from '..';
 
 export default class PostsService {
-    static uploadPost(postData: PostData) {
-        return (dispatch: any) => {
+    static uploadPost(postData: PostData): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -29,8 +31,8 @@ export default class PostsService {
         }
     }
     
-    static getUserPosts(userId: string) {
-        return (dispatch: any) => {
+    static getUserPosts(userId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
             
             const optionsReq: RequestOptions = {
@@ -49,8 +51,8 @@ export default class PostsService {
         }
     }
     
-    static getAllSubsPosts() {
-        return (dispatch: any) => {
+    static getAllSubsPosts(): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -69,8 +71,8 @@ export default class PostsService {
         }
     }
     
-    static searchPosts({ searchText }: SearchData) {
-        return (dispatch: any) => {
+    static searchPosts({ searchText }: SearchData): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -89,8 +91,8 @@ export default class PostsService {
         }
     }
     
-    static likePost(postId: string) {
-        return (dispatch: any) => {
+    static likePost(postId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             const optionsReq: RequestOptions = {
                 method: 'put',
                 url: `${URI}/feed/posts/like/${postId}`,
@@ -104,8 +106,8 @@ export default class PostsService {
         }
     }
     
-    static dislikePost(postId: string) {
-        return (dispatch: any) => {
+    static dislikePost(postId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             const optionsReq = {
                 method: 'put',
                 url: `${URI}/feed/posts/dislike/${postId}`,
@@ -119,8 +121,8 @@ export default class PostsService {
         }
     }
     
-    static deletePost(postId: string) {
-        return (dispatch: any) => {
+    static deletePost(postId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {
@@ -139,8 +141,8 @@ export default class PostsService {
         }
     }
     
-    static editPost(postData: PostData, postId: string) {
-        return (dispatch: any) => {
+    static editPost(postData: PostData, postId: string): ThunkResult<Promise<any>> {
+        return (dispatch: AppDispatch) => {
             dispatch(fetchStatusActions.beginFetch());
     
             const optionsReq: RequestOptions = {

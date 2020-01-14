@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PostsSection from '../../PostComponents/PostsSection';
-import UsersService from '../../../services/UsersService';
-import Modal from '../../Modals/Modal';
+import Modal from '../../Modals/UserModal';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import Loader from '../../Loader/Loader';
 import UserInfoContainer from '../../UserInfoComponents/UserInfoContainer';
 import PropTypes from 'prop-types';
 import { List, Map } from "immutable";
-import CommentData from '../../../interfaces/Feed/CommentData.interface';
 
-import CommentsService from '../../../services/CommentsService';
-import PostsService from '../../../services/PostsService';
 import { UserProfileProps, connector } from '../../../interfaces/Components/UserProfile/UserProfileProps.interface';
-import Store from '../../../interfaces/Store/Store.interface';
-import Post from '../../../interfaces/Feed/Post.interface';
-import User from '../../../interfaces/User/User.interface';
+import User, { PlainUser } from '../../../interfaces/User/User.interface';
 import UserProfileState from '../../../interfaces/Components/UserProfile/UserProfileState.interface';
 
 class UserProfile extends Component<UserProfileProps, UserProfileState> {
@@ -32,16 +25,16 @@ class UserProfile extends Component<UserProfileProps, UserProfileState> {
     handleShow = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.persist();
 
-        const users: User[] = this.props.user.get(e.currentTarget.id).toJS();
+        const users: PlainUser[] = this.props.user.get(e.currentTarget.id).toJS();
         const modalHeaderName: string = e.currentTarget.name;
 
-        this.setState((oldState) => ({ showModal: true, users, modalHeaderName }));
+        this.setState(() => ({ showModal: true, users, modalHeaderName }));
     }
 
     handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.persist();
 
-        this.setState((oldState) => ({ showModal: false, users: [], modalHeaderName: '' }));
+        this.setState(() => ({ showModal: false, users: [], modalHeaderName: '' }));
     }
 
     render() {
@@ -61,8 +54,8 @@ class UserProfile extends Component<UserProfileProps, UserProfileState> {
             <main>
                 <UserInfoContainer
                     user={{ ...user.toJS(), _id: user.get('id') || user.get('_id') }}
-                    modalShowHandler={this.handleShow}
-                    unfollowHandler={this.props.unfollow}
+                    modalShowHandler={this.handleShow as () => void}
+                    unfollowHandler={this.props.unfollow} 
                     followHandler={this.props.follow}
                     isFollowed={isFollowed}
                 />
@@ -79,7 +72,7 @@ class UserProfile extends Component<UserProfileProps, UserProfileState> {
                 />
 
                 {/* Modal for followers or following users */}
-                { this.state.showModal ? <Modal handleClose={this.handleClose} modalHeaderName={this.state.modalHeaderName} users={this.state.users} /> : null }
+                { this.state.showModal ? <Modal handleClose={this.handleClose as () => void} modalHeaderName={this.state.modalHeaderName} users={this.state.users} /> : null }
             </main>
         )
     }

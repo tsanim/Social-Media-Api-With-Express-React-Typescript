@@ -18,7 +18,6 @@ function Header(props: HeaderProps) {
                     switchToOffline={props.switchToOffline}
                     switchToOnline={props.switchToOnline}
                     notifications={props.notifications}
-                    showDropDownHandler={props.showDropDownHandler}
                 />
                 : null
             }

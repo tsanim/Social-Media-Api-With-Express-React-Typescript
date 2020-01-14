@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MakePostDiv from '../../PostComponents/CreatePostForm';
 import UserInfoContainer from '../../UserInfoComponents/UserInfoContainer';
-import Modal from '../../Modals/Modal';
+import Modal from '../../Modals/UserModal';
 import PostsSection from '../../PostComponents/PostsSection';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
@@ -25,16 +25,16 @@ class MyProfile extends Component<MyProfileProps, UserProfileState> {
     handleShow = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.persist();
 
-        const users: User[] = this.props.currentUser.get(e.currentTarget.id).toJS();
+        const users: PlainUser[] = this.props.currentUser.get(e.currentTarget.id).toJS();
         const modalHeaderName: string = e.currentTarget.name;
 
-        this.setState((oldState) => ({ showModal: true, users, modalHeaderName }));
+        this.setState(() => ({ showModal: true, users, modalHeaderName }));
     }
 
     handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.persist();
 
-        this.setState((oldState) => ({ showModal: false, users: [], modalHeaderName: '' }));
+        this.setState(() => ({ showModal: false, users: [], modalHeaderName: '' }));
     }
 
     componentDidUpdate(prevProps: MyProfileProps) {
@@ -54,7 +54,7 @@ class MyProfile extends Component<MyProfileProps, UserProfileState> {
             <main>
                 <UserInfoContainer
                     user={{ ...this.props.currentUser.toJS(), posts: this.props.userPosts.toJS() }}
-                    modalShowHandler={this.handleShow}
+                    modalShowHandler={this.handleShow as () => void}
                 />
                 <MakePostDiv
                     user={this.props.currentUser.toJS() as PlainUser}
@@ -76,7 +76,7 @@ class MyProfile extends Component<MyProfileProps, UserProfileState> {
                 />
 
                 {/* Modal for followers or following users */}
-                { showModal ? <Modal handleClose={this.handleClose} modalHeaderName={modalHeaderName} users={users} /> : null }
+                { showModal ? <Modal handleClose={this.handleClose as () => void} modalHeaderName={modalHeaderName} users={users} /> : null }
 
             </main>
         )

@@ -1,9 +1,9 @@
 import User from "../../User/User.interface";
-import { List } from "immutable";
 import Store from "../../Store/Store.interface";
 import UsersService from "../../../services/UsersService";
 import { resetErrors } from "../../../store/actions/errorsActions/actionsCreator";
 import { connect, ConnectedProps } from "react-redux";
+import { AppThunkDispatch } from "../../../types";
 
 export interface EditUserInformation {
     username?: string;
@@ -23,7 +23,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         changePass: (data: ChangePassword) => dispatch(UsersService.changePassword(data)),
         changeProfilePic: (data: { avatar: File }) => dispatch(UsersService.changeUserPic(data)),

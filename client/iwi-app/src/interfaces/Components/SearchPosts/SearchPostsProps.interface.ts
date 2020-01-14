@@ -3,8 +3,9 @@ import PostData from "../../Feed/PostData.interface";
 import Store from "../../Store/Store.interface";
 import PostsService from "../../../services/PostsService";
 import CommentsService from "../../../services/CommentsService";
-import Comment from "../../Feed/CommentData.interface";
+import CommentData from "../../Feed/CommentData.interface";
 import { connect, ConnectedProps } from "react-redux";
+import { AppThunkDispatch } from "../../../types";
 
 const mapState = (state: Store) => {
     return {
@@ -14,7 +15,7 @@ const mapState = (state: Store) => {
     }
 }
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatch = (dispatch: AppThunkDispatch) => {
     return {
         search: (data: SearchData) => dispatch(PostsService.searchPosts(data)),
         like: (postId: string) => dispatch(PostsService.likePost(postId)),
@@ -24,7 +25,7 @@ const mapDispatch = (dispatch: any) => {
         likeCom: (_id: string) => dispatch(CommentsService.likeComment(_id)),
         dislikeCom: (_id: string) => dispatch(CommentsService.dislikeComment(_id)),
         deleteCom: (_id: string) => dispatch(CommentsService.deleteComment(_id)),
-        makeCom: (data: Comment) => dispatch(CommentsService.makeComment(data)),
+        makeCom: (data: CommentData) => dispatch(CommentsService.makeComment(data)),
     }
 }
 
