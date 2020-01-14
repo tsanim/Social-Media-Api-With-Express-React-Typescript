@@ -1,15 +1,14 @@
 import express from 'express';
-import http from 'http';
-import socketio from 'socket.io';
 import db from '../config/database';
 import initilializeMiddlewaresExpress from '../config/express';
 import initSocketIo from '../socketio/socketio';
 import { BaseConfig } from '../interfaces/config.interface';
+import { Logger } from 'winston';
 
 class App {
     public app: express.Application;
 
-    constructor(public controllers: any, public config: BaseConfig, public logger: any) {
+    constructor(public controllers: any, public config: BaseConfig, public logger: Logger) {
         this.app = express();
 
         this.initDatabase();
@@ -33,7 +32,7 @@ class App {
     }
 
     private initializeSocketIo() {
-        initSocketIo(express, socketio, http, this.config.socketPORT, this.logger);
+        initSocketIo(this.app, this.config.socketPORT, this.logger);
     }
 
     public listen() {

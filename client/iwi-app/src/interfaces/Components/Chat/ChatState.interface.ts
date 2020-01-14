@@ -1,9 +1,9 @@
-import User from "../../User/User.interface";
+import User, { PlainUser } from "../../User/User.interface";
 import Message from "../../Feed/Message.interface";
 
 export default interface ChatState {
-    onlineUsers: User[];
-    onlineUser: User;
+    onlineUsers: User[] | PlainUser[];
+    onlineUser: User | PlainUser;
     isRoomShown: boolean;
     messages: Message[];
     infoMessage: string;
