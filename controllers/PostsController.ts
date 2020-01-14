@@ -8,6 +8,7 @@ import validatePost from '../utils/validatePost';
 import mongoose, { Connection } from 'mongoose';
 import Comment from '../models/Comment';
 import IPost from '../interfaces/models/Post.interface';
+import RequestCustom from '../interfaces/RequestCustom.interface';
 const conn: Connection = mongoose.connection;
 
 class PostsController {
@@ -147,7 +148,7 @@ class PostsController {
         }
     }
 
-    private async dislikePost(req: express.Request, res: express.Response, next: express.NextFunction) {
+    private async dislikePost(req: RequestCustom, res: express.Response, next: express.NextFunction) {
         try {
             //get post id from req params
             const { postId } = req.params;

@@ -10,6 +10,7 @@ import { validateUser } from "../utils/validateUser";
 import Encryption from "../utils/Encryption";
 import pushInUserArray from "../utils/pushInUserarray";
 import filterUserArray from "../utils/fitlerUserArray";
+import RequestCustom from "../interfaces/RequestCustom.interface";
 
 const conn: Connection = mongoose.connection;
 
@@ -102,7 +103,7 @@ export default class UsersController {
         }
     }
 
-    private async changeProfilePicture(req: express.Request, res: express.Response, next: express.NextFunction) {
+    private async changeProfilePicture(req: RequestCustom, res: express.Response, next: express.NextFunction) {
         try {
             //get user id from req user id prop from decoded token
             const userId = req.userId;

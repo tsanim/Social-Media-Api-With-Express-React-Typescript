@@ -4,6 +4,7 @@ import logger from "../logger/logger";
 import User from "../models/User";
 import Post from "../models/Post";
 import Comment from "../models/Comment";
+import RequestCustom from "../interfaces/RequestCustom.interface";
 
 export default class CommentsController {
     public path = '/feed';
@@ -21,7 +22,7 @@ export default class CommentsController {
         this.router.delete('/comments/delete/:commentId', isAuth, this.deleteComment);
     }
 
-    private async createComment(req: express.Request, res: express.Response, next: express.NextFunction) {
+    private async createComment(req: RequestCustom, res: express.Response, next: express.NextFunction) {
         try {
             //init comment data fromr req body
             const { text, postId } = req.body;
