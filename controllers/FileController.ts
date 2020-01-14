@@ -1,9 +1,10 @@
 import express from "express";
 import logger from "../logger/logger";
 import mongoose, { Connection } from 'mongoose';
+import Controller from "../interfaces/Controller.interface";
 const conn: Connection = mongoose.connection;
 
-class FileController {
+class FileController implements Controller {
     public path = '/feed';
     public router = express.Router();
 

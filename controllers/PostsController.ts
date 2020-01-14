@@ -9,9 +9,10 @@ import mongoose, { Connection } from 'mongoose';
 import Comment from '../models/Comment';
 import IPost from '../interfaces/models/Post.interface';
 import RequestCustom from '../interfaces/RequestCustom.interface';
+import Controller from '../interfaces/Controller.interface';
 const conn: Connection = mongoose.connection;
 
-class PostsController {
+class PostsController implements Controller {
     public path = '/feed';
     public router = express.Router();
     private upload = multer({ storage: this.storage });

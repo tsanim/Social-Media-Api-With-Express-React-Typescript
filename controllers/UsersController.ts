@@ -11,13 +11,14 @@ import Encryption from "../utils/Encryption";
 import pushInUserArray from "../utils/pushInUserarray";
 import filterUserArray from "../utils/fitlerUserArray";
 import RequestCustom from "../interfaces/RequestCustom.interface";
+import Controller from "../interfaces/Controller.interface";
 
 const conn: Connection = mongoose.connection;
 
 const env = process.env.NODE_ENV || 'development';
 const config = new Configuration(env);
 
-export default class UsersController {
+export default class UsersController implements Controller {
     public path = '/user';
     public router = express.Router();
     private upload = multer({ storage: this.storage });
