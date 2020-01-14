@@ -1,20 +1,23 @@
- // Models
+import Service from './UsersService';
+import socketio, { Socket } from 'socket.io';
+import http from 'http';
+
+// Models
  import User from '../models/User';
  import Notification from '../models/Notification';
  import Message from '../models/Message';
  import Room from '../models/Room';
+import { Logger } from 'winston';
 
- import Service from './UsersService';
-
-export default (express: any, socketio: any, http: any, socketPORT: number, logger: any) => {
+export default (app: Express.Application, socketPORT: number, logger: Logger) => {
     //init socket io and socket server
-    const socketServer = http.createServer(express());
+    const socketServer = http.createServer(app);
     const io = socketio(socketServer);
 
     //init UserService
     let UserService = new Service();
 
-    io.on('connection', (socket: any) => {
+    io.on('connection', (socket: Socket) => {
         logger.log('info', `User with socket id ${socket.id} is connected`);
 
         //join to online users (general socket)
