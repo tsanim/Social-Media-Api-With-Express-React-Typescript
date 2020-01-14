@@ -45,8 +45,6 @@ export default  (req: RequestCustom, res: express.Response, next: express.NextFu
       .json({ message: 'Not authenticated.' });
   }
 
-  console.log(decodedToken);
-
   //set user id to req from decoded token
   req.userId = decodedToken.userId;
   next();
