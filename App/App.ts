@@ -1,10 +1,10 @@
 import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
-import db from './config/database';
-import initExpress from './config/express';
-import initSocketIo from './socketio/socketio';
-import { BaseConfig } from './interfaces/config.interface';
+import db from '../config/database';
+import initilializeMiddlewaresExpress from '../config/express';
+import initSocketIo from '../socketio/socketio';
+import { BaseConfig } from '../interfaces/config.interface';
 
 class App {
     public app: express.Application;
@@ -23,11 +23,11 @@ class App {
     }
 
     private initMiddlewares() {
-        initExpress(this.app);
+        initilializeMiddlewaresExpress(this.app);
     }
 
     private initRoutes() {
-        this.controllers.forEach(controller => {
+        this.controllers.forEach((controller: any) => {
             this.app.use(controller.path, controller.router)
         });
     }

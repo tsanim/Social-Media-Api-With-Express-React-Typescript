@@ -1,24 +1,44 @@
+import express from "express";
+import isAuth from "../middlewares/isAuth";
+import Configuration from '../config/Configuration';
+import validationArrays from "../utils/ValidationArrays";
+import multer from 'multer';
+import User from "../models/User";
+import mongoose, { Connection } from "mongoose";
+import logger from "../logger/logger";
+import { validateUser } from "../utils/validateUser";
+import Encryption from "../utils/Encryption";
+import pushInUserArray from "../utils/pushInUserarray";
+import filterUserArray from "../utils/fitlerUserArray";
+import RequestCustom from "../interfaces/RequestCustom.interface";
+
+const conn: Connection = mongoose.connection;
+
 const env = process.env.NODE_ENV || 'development';
+const config = new Configuration(env);
 
-import { validationResult } from 'express-validator/check';
-import mongoose from 'mongoose';
+export default class UsersController {
+    public path = '/user';
+    public router = express.Router();
+    private upload = multer({ storage: this.storage });
 
-const conn = mongoose.connection;
+    constructor(public storage: any) {
+        this.initializeRoutes();
+    }
 
-//Models
-import Post from '../models/Post';
-import User from '../models/User';
-import Comment from '../models/Comment';
+    private initializeRoutes() {
+        this.router.get('/info/:userId', isAuth, this.getUserById);
+        this.router.get('/search', isAuth, this.searchUser);
+        this.router.put('/changePic', isAuth, this.upload.single('avatar'), this.changeProfilePicture);
+        this.router.put('/edit', isAuth, this.editUserInfo);
 
-import encryption from '../utils/encryption';
+        //route for change pass and pass validation from check from express validator
+        this.router.put('/changePassword', validationArrays.newPassword, isAuth, this.changePassword)
+        this.router.put('/follow/:followedUserId', isAuth, this.followUser);
+        this.router.put('/unfollow/:unfollowedUserId', isAuth, this.unfollowUser);
+    }
 
-//get default image from config file(dedault image is id store in db)
-import config from '../config/config'
-import logger from '../logger/logger';
-const { defaultUserImage } = config[env];
-
-export default  {
-    getUserById: async (req, res, next) => {
+    private async getUserById(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get user id fromr req params
             const userId = req.params.userId;
@@ -81,8 +101,9 @@ export default  {
 
             next(err);
         }
-    },
-    changeProfilePicture: async (req, res, next) => {
+    }
+
+    private async changeProfilePicture(req: RequestCustom, res: express.Response, next: express.NextFunction) {
         try {
             //get user id from req user id prop from decoded token
             const userId = req.userId;
@@ -94,7 +115,7 @@ export default  {
 
             //delete the photo before upload with the aim to reduce old files in db
             if (req.file) {
-                if (defaultUserImage !== user.imageId.toString()) {
+                if (config.environmentConfig.defaultUserImage !== user.imageId.toString()) {
                     const bucket = new mongoose.mongo.GridFSBucket(conn.db);
 
                     let id = new mongoose.mongo.ObjectID(user.imageId);
@@ -103,7 +124,7 @@ export default  {
                 }
 
                 //update user with new image id
-                User.findByIdAndUpdate(userId, { imageId: req.file.id }, { new: true, useFindAndModify: false }, (error, userDoc) => {
+                User.findByIdAndUpdate(userId, { imageId: req.file.id }, { new: true, useFindAndModify: false }, (error: any, userDoc: any) => {
                     if (error) {
                         error.statusCode = 500;
 
@@ -161,9 +182,10 @@ export default  {
 
             next(error);
         }
-    },
-    editUserInfo: async (req, res, next) => {
-        if (validateUser(req)) {
+    }
+
+    private async editUserInfo(req: express.Request, res: express.Response, next: express.NextFunction) {
+        if (validateUser(req, res)) {
             try {
                 //get user id fromr req user id prop from decoded token
                 const userId = req.userId;
@@ -172,7 +194,7 @@ export default  {
                 const reqBody = req.body;
 
                 //update user info with req body object that contains all new user info
-                User.findByIdAndUpdate(userId, reqBody, { new: true, useFindAndModify: false }, (error, userDoc) => {
+                User.findByIdAndUpdate(userId, reqBody, { new: true, useFindAndModify: false }, (error: any, userDoc: any) => {
                     if (error) {
                         error.statusCode = 500;
 
@@ -230,8 +252,9 @@ export default  {
                 next(error);
             }
         }
-    },
-    followUser: async (req, res, next) => {
+    }
+
+    private async followUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get followed user id from req params
             const { followedUserId } = req.params;
@@ -328,8 +351,9 @@ export default  {
         } catch (error) {
             next(error);
         }
-    },
-    unfollowUser: async (req, res, next) => {
+    }
+
+    private async unfollowUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get unfollowed user id
             const { unfollowedUserId } = req.params;
@@ -425,8 +449,9 @@ export default  {
         } catch (error) {
             next(error);
         }
-    },
-    searchUser: async (req, res, next) => {
+    }
+
+    private async searchUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get search text from query
             const { searchText } = req.query;
@@ -450,8 +475,9 @@ export default  {
         } catch (error) {
             next(error);
         }
-    },
-    changePassword: async (req, res, next) => {
+    }
+
+    private async changePassword(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             //get old pass and new pass 
             const { oldPassword, newPassword } = req.body;
@@ -485,8 +511,8 @@ export default  {
                 throw error;
             }
 
-            const newSalt = encryption.generateSalt();
-            const newHashedPassword = encryption.generateHashedPassword(newSalt, newPassword);
+            const newSalt = Encryption.generateSalt();
+            const newHashedPassword = Encryption.generateHashedPassword(newSalt, newPassword);
 
             //init new updated user obj with new salt and hashed pass
             let updatedUser = Object.assign({}, {
@@ -552,43 +578,4 @@ export default  {
             next(error);
         }
     }
-}
-
-//Validation func with express-validator
-function validateUser(req, res) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        logger.log('error', 'Validation error. Entered data is incorrect')
-
-        res.status(422).json({
-            message: 'Validation failed, entered data is incorrect',
-            errors: errors.array()
-        });
-
-        return false;
-    }
-
-    return true;
-}
-
-//function to filter user's array of subs and etc
-function filterUserArray(userArr, userId) {
-    if (userArr.findIndex(obj => obj._id.toString() === userId) >= 0) {
-        return userArr.filter(u => u._id.toString() !== userId);
-    }
-
-    return userArr;
-}
-
-//func to push in user's array of followers
-function pushInUserArray(userArr, user) {
-    if (userArr.findIndex(obj => obj._id.toString() === user._id.toString()) === -1) {
-        delete user.hashedPassword;
-        delete user.salt;
-
-        userArr.push(user);
-        return userArr;
-    }
-
-    return userArr;
 }

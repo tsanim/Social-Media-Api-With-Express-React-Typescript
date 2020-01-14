@@ -6,7 +6,7 @@
 
  import Service from './UsersService';
 
-export default (express, socketio, http, socketPORT, logger) => {
+export default (express: any, socketio: any, http: any, socketPORT: number, logger: any) => {
     //init socket io and socket server
     const socketServer = http.createServer(express());
     const io = socketio(socketServer);
@@ -14,11 +14,11 @@ export default (express, socketio, http, socketPORT, logger) => {
     //init UserService
     let UserService = new Service();
 
-    io.on('connection', (socket) => {
+    io.on('connection', (socket: any) => {
         logger.log('info', `User with socket id ${socket.id} is connected`);
 
         //join to online users (general socket)
-        socket.on('join', async ({ userId }) => {
+        socket.on('join', async ({ userId }: { userId: string }) => {
             logger.log('info', `${userId} is online!`);
 
             let onlineUsers = await UserService.addOnlineUser(userId);
@@ -31,7 +31,7 @@ export default (express, socketio, http, socketPORT, logger) => {
             socket.emit('onlineUsers', { onlineUsers: UserService.getOnlineUsers() })
         });
 
-        socket.on('sendNotification', async ({ notificatedUserId, senderId }) => {
+        socket.on('sendNotification', async ({ notificatedUserId, senderId }: { notificatedUserId: string; senderId: string }) => {
             try {
                 const user = await User.findById(notificatedUserId).populate('notifications');
                 const sender = await User.findById(senderId);
@@ -53,7 +53,7 @@ export default (express, socketio, http, socketPORT, logger) => {
             }
         });
 
-        socket.on('getMessages', async ({ currentUserId, onlineUserId }) => {
+        socket.on('getMessages', async ({ currentUserId, onlineUserId }: { currentUserId: string; onlineUserId: string }) => {
             try {
                 let room = await Room.findOne({ pairUsers: { $all: [currentUserId, onlineUserId] } }).populate({
                     path: 'messages',
@@ -69,7 +69,7 @@ export default (express, socketio, http, socketPORT, logger) => {
         })
 
         //join room socket, when client send it from notification
-        socket.on('joinSenderRoom', async ({ userId, senderId }) => {
+        socket.on('joinSenderRoom', async ({ userId, senderId }: { userId: string; senderId: string }) => {
             try {
                 const user = await User.findById(userId).populate('notifications');
                 const senderUser = await User.findById(senderId).populate('notifications');
@@ -92,7 +92,7 @@ export default (express, socketio, http, socketPORT, logger) => {
             }
         });
 
-        socket.on('joinRoom', async ({ userId, senderId }) => {
+        socket.on('joinRoom', async ({ userId, senderId }: { userId: string; senderId: string }) => {
             try {
                 const user = await User.findById(userId).populate('notifications');
                 const senderUser = await User.findById(senderId).populate('notifications');
@@ -127,15 +127,15 @@ export default (express, socketio, http, socketPORT, logger) => {
 
         });
 
-        socket.on('typing', ({ username, roomId }) => {
+        socket.on('typing', ({ username, roomId }: { username: string; roomId: string }) => {
             socket.broadcast.to(roomId).emit('typing', { username });
         });
 
-        socket.on('stopTyping', ({ roomId }) => {
+        socket.on('stopTyping', ({ roomId }: { roomId: string }) => {
             socket.broadcast.to(roomId).emit('stopTyping');
         });
 
-        socket.on('sendMessage', async ({ roomId, text, userId }) => {
+        socket.on('sendMessage', async ({ roomId, text, userId }: { roomId: string; text: string; userId: string }) => {
             try {
                 if (text === '') {
                     logger.log('warn',`Can not send empty message!`);
@@ -163,14 +163,14 @@ export default (express, socketio, http, socketPORT, logger) => {
 
         });
 
-        socket.on('leaveRoom', ({ roomId, username }) => {
+        socket.on('leaveRoom', ({ roomId, username }: { roomId: string; username: string }) => {
             socket.leave(roomId);
             socket.broadcast.to(roomId).emit('infoMessage', { text: `${username} left room!` });
 
             logger.log('info',`${username} left room: ${roomId}`);
         })
 
-        socket.on('disconnect', async ({ userId }) => {
+        socket.on('disconnect', async ({ userId }: { userId: string }) => {
             UserService.removeOnlineUser(userId);
 
             logger.log('info',`User with socket id ${socket.id} is disconnected`);

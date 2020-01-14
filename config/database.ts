@@ -4,7 +4,7 @@ import User from '../models/User';
 import { BaseConfig } from '../interfaces/config.interface';
 import { Logger } from 'winston';
 
-export default ({ mongoUrl }: BaseConfig, logger: Logger) => {
+export default ({ mongoUrl }: BaseConfig, logger: Logger): void => {
     mongoose.connect(mongoUrl as string, { useNewUrlParser: true, useUnifiedTopology: true });
 
     const db = mongoose.connection;
@@ -14,9 +14,9 @@ export default ({ mongoUrl }: BaseConfig, logger: Logger) => {
 
         //Seed Admin with once open database
         User.seedAdmin()
-            .then(user => {
+            .then(()=> {
                 console.log('Database is ready!');
-            }).catch(err => {
+            }).catch((err: any) => {
                 logger.log('error', `User seed admin error.`, ...err);
             });
     });

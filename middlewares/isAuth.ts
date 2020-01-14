@@ -1,13 +1,15 @@
-const env = process.env.NODE_ENV || 'development';
-
+import express from 'express';
 import jwt from 'jsonwebtoken';
-import config from '../config/config'
-const jwtSecret = config[env].JWT_SECRET;
-
+import Configuration from '../config/Configuration';
 //init logger
 import logger from '../logger/logger'
+import DecodedToken from '../interfaces/DecodedToken.interfaca';
+import RequestCustom from '../interfaces/RequestCustom.interface';
 
-export default  (req, res, next) => {
+const env = process.env.NODE_ENV || 'development';
+const config = new Configuration(env);
+
+export default  (req: RequestCustom, res: express.Response, next: express.NextFunction) => {
   //get request header for authorization
   const authHeaders = req.get('Authorization');
 
@@ -23,11 +25,11 @@ export default  (req, res, next) => {
   const token = req.get('Authorization').split(' ')[1];
 
   //init decodedToken
-  let decodedToken;
+  let decodedToken: DecodedToken;
 
   try {
     //verify token from header so we can see if user is authenticated
-    decodedToken = jwt.verify(token, jwtSecret);
+    decodedToken = jwt.verify(token, config.environmentConfig.JWT_SECRET) as DecodedToken;
   } catch (error) {
     logger.log('error', `Token is invalid!`);
 

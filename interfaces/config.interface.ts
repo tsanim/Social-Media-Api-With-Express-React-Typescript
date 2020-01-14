@@ -5,8 +5,3 @@ export interface BaseConfig {
     JWT_SECRET: string | undefined;
     socketPORT: number;
 }
-
-export default interface Config {
-    development: BaseConfig;
-    production: BaseConfig;
-}

@@ -1,19 +1,19 @@
+import mongoose, { Schema, Model } from 'mongoose';
+import Encryption from '../utils/Encryption';
+import Configuration from '../config/Configuration';
+import IUser from '../interfaces/models/User.interface';
+import UserModel from '../interfaces/models/UserModel';
 const env = process.env.NODE_ENV || 'development';
 
-import mongoose from 'mongoose';
-import encryption from '../utils/encryption';
-import config from '../config/config';
+const config = new Configuration(env);
 
-const Schema = mongoose.Schema;
-const { defaultUserImage } = config[env];
-
-const userSchema = new Schema({
+const userSchema: Schema = new Schema({
     username: { type: Schema.Types.String, required: true },
     email: { type: Schema.Types.String, required: true },
-    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification'}],
+    notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
     firstName: { type: Schema.Types.String, required: true },
     lastName: { type: Schema.Types.String, required: true },
-    imageId: { type: Schema.Types.ObjectId, default: new mongoose.mongo.ObjectID(defaultUserImage) },
+    imageId: { type: Schema.Types.ObjectId, default: new mongoose.mongo.ObjectID(config.environmentConfig.defaultUserImage) },
     hashedPassword: { type: Schema.Types.String, required: true },
     salt: { type: Schema.Types.String, required: true },
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
@@ -25,23 +25,21 @@ const userSchema = new Schema({
 
 //add schema method for authenticate to check if hashed pass is valid
 userSchema.method({
-    authenticate: function (password) {
-        const currentHashedPass = encryption.generateHashedPassword(this.salt, password);
+    authenticate: function (password: string) {
+        const currentHashedPass = Encryption.generateHashedPassword(this.salt, password);
 
         return currentHashedPass === this.hashedPassword;
     }
-})
-
-const User = mongoose.model('User', userSchema);
+});
 
 //when app is set up and db is empty first we seed admin 
-User.seedAdmin = async () => {
+userSchema.statics.seedAdmin = async () => {
     try {
-        const users = await User.find({});
+        const users: IUser[] = await User.find({});
         if (users.length > 0) return;
 
-        const salt = encryption.generateSalt();
-        const hashedPassword = encryption.generateHashedPassword(salt, 'Admin');
+        const salt = Encryption.generateSalt();
+        const hashedPassword = Encryption.generateHashedPassword(salt, 'Admin');
 
         return User.create({
             username: 'Admin',
@@ -56,5 +54,7 @@ User.seedAdmin = async () => {
         console.log(error);
     }
 }
+
+const User: UserModel = mongoose.model<IUser, UserModel>('User', userSchema);
 
 export default User;

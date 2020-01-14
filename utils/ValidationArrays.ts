@@ -44,6 +44,13 @@ const validationArrays = {
         check('email')
         .isEmail()
         .withMessage('Please enter valid email!')
+    ],
+    newPassword: [
+        check('newPassword')
+            .matches(/^.*(?=.{6,})(?=.*[a-zA-Z])[a-zA-Z0-9]+$/)
+            .withMessage('Password must contain at least one letter and at least one digit!')
+            .isLength({ min: 8 })
+            .withMessage('Password must be at least 8 symbols!')
     ]
 }
 

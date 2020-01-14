@@ -5,3 +5,4 @@ declare module 'babel-register';
 declare module 'babel-preset-stage-2';
 declare module 'babel-preset-es2015';
 declare module 'babel-polyfill';
+declare module 'express-favicon';

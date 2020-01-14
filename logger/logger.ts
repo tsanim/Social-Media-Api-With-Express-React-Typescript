@@ -5,7 +5,7 @@ const LEVEL = Symbol.for('level');
 /**
  * Log only the messages the match `level`.
  */
-function filterOnly(level) {
+function filterOnly(level: string) {
     return format(function (info) {
         if (info[LEVEL] === level) {
             return info;
