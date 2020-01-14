@@ -10,7 +10,7 @@ import { wrapComponent } from 'react-snackbar-alert';
 import { ChatProps, connector } from '../../../interfaces/Components/Chat/ChatProps.interface';
 import ChatState from '../../../interfaces/Components/Chat/ChatState.interface';
 import Message from '../../../interfaces/Feed/Message.interface';
-import User from '../../../interfaces/User/User.interface';
+import User, { PlainUser } from '../../../interfaces/User/User.interface';
 
 const chatEndPoint = 'localhost:8888'
 const socket = io(chatEndPoint);
@@ -35,11 +35,11 @@ class Chat extends Component<ChatProps, ChatState> {
 
     showRoomHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
-            const onlineUser = this.state.onlineUsers.find(u => u._id === e.currentTarget.id);
+            const onlineUser = (this.state.onlineUsers as User[]).find((u: User) => u._id === e.currentTarget.id);
 
             socket.emit('joinRoom', { userId: onlineUser._id, senderId: localStorage.getItem('userId') });
             socket.emit('sendNotification', { senderId: localStorage.getItem('userId'), notificatedUserId: onlineUser._id });
-            const stateMessages: Message[] = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
+            const stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), onlineUser._id);
 
             this.setState(() => ({
                 onlineUser,
@@ -168,8 +168,8 @@ class Chat extends Component<ChatProps, ChatState> {
 
         if ((!oldSender && sender) || (oldSender !== sender)) {
             try {
-                let stateMessages: any = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender as string)
-                let onlineUser: any = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender as string);
+                let stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender as string)
+                let onlineUser = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender as string);
 
                 this.setState({
                     isRoomShown: true,
@@ -190,7 +190,7 @@ class Chat extends Component<ChatProps, ChatState> {
 
         if (this.state.onlineUser._id) {
             try {
-                let messages: any = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), this.state.onlineUser._id);
+                let messages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), this.state.onlineUser._id);
 
                 this.setState({ messages });
             } catch (error) {
@@ -200,8 +200,8 @@ class Chat extends Component<ChatProps, ChatState> {
 
         if (sender) {
             try {
-                let stateMessages: any = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender as string);
-                let onlineUser: any = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender as string);
+                let stateMessages = await ChatService.getRoomMessages(socket, localStorage.getItem('userId'), sender as string);
+                let onlineUser = await ChatService.joinSenderRoom(socket, localStorage.getItem('userId'), sender as string);
 
                 this.setState(oldState => {
                     return {
@@ -218,11 +218,11 @@ class Chat extends Component<ChatProps, ChatState> {
 
         this.timer = setInterval(async () => {
             try {
-                const onlineUsers: any = await ChatService.getOnlineUsers(socket);
-                const currentUserSubs: User[] = this.props.currentUser.get('subscriptions').toJS();
+                const onlineUsers = await ChatService.getOnlineUsers(socket);
+                const currentUserSubs: PlainUser[] = this.props.currentUser.get('subscriptions').toJS();
 
                 this.setState({
-                    onlineUsers: onlineUsers.filter((onlineUser: User) => currentUserSubs.some((u: User) => {
+                    onlineUsers: onlineUsers.filter((onlineUser: PlainUser) => currentUserSubs.some((u: PlainUser) => {
                         return u._id === onlineUser._id.toString()
                     }))
                 });
