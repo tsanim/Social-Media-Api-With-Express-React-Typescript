@@ -7,10 +7,11 @@ import jwt from 'jsonwebtoken'
 import cleanUserObj from '../utils/cleanUserObj';
 import Configuration from '../config/Configuration'
 import { validateUser } from '../utils/validateUser';
+import Controller from '../interfaces/Controller.interface';
 const env = process.env.NODE_ENV || 'development';
 const config = new Configuration(env);
 
-export default class AuthController {
+export default class AuthController implements Controller {
     public path = '/auth';
     public router = express.Router();
 
