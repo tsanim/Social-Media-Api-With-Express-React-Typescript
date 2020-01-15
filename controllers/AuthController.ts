@@ -5,17 +5,14 @@ import Encryption from '../utils/Encryption';
 import User from '../models/User';
 import jwt from 'jsonwebtoken'
 import cleanUserObj from '../utils/cleanUserObj';
-import Configuration from '../config/Configuration'
 import { validateUser } from '../utils/validateUser';
 import Controller from '../interfaces/Controller.interface';
-const env = process.env.NODE_ENV || 'development';
-const config = new Configuration(env);
 
 export default class AuthController implements Controller {
     public path = '/auth';
     public router = express.Router();
 
-    constructor() {
+    constructor(private JWT_SECRET: string) {
         this.initialiseRoutes();
     }
 
@@ -63,7 +60,7 @@ export default class AuthController implements Controller {
                         email: user.email,
                         userId: user._id
                     },
-                        config.environmentConfig.JWT_SECRET);
+                        this.JWT_SECRET);
 
                     logger.log('info', `User (Id: ${user._id}, email: ${user.email}) is succesfully logged in!`);
 

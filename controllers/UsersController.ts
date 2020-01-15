@@ -1,6 +1,5 @@
 import express from "express";
 import isAuth from "../middlewares/isAuth";
-import Configuration from '../config/Configuration';
 import validationArrays from "../utils/ValidationArrays";
 import multer from 'multer';
 import User from "../models/User";
@@ -15,15 +14,12 @@ import Controller from "../interfaces/Controller.interface";
 
 const conn: Connection = mongoose.connection;
 
-const env = process.env.NODE_ENV || 'development';
-const config = new Configuration(env);
-
 export default class UsersController implements Controller {
     public path = '/user';
     public router = express.Router();
     private upload = multer({ storage: this.storage });
 
-    constructor(public storage: any) {
+    constructor(public storage: any, private defaultUserImage: string) {
         this.initializeRoutes();
     }
 
@@ -116,7 +112,7 @@ export default class UsersController implements Controller {
 
             //delete the photo before upload with the aim to reduce old files in db
             if (req.file) {
-                if (config.environmentConfig.defaultUserImage !== user.imageId.toString()) {
+                if (this.defaultUserImage !== user.imageId.toString()) {
                     const bucket = new mongoose.mongo.GridFSBucket(conn.db);
 
                     let id = new mongoose.mongo.ObjectID(user.imageId);
