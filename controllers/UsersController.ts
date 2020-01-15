@@ -11,15 +11,20 @@ import pushInUserArray from "../utils/pushInUserarray";
 import filterUserArray from "../utils/fitlerUserArray";
 import RequestCustom from "../interfaces/RequestCustom.interface";
 import Controller from "../interfaces/Controller.interface";
+import Configuration from "../config/Configuration";
 
 const conn: Connection = mongoose.connection;
+
+const env = process.env.NODE_ENV || 'development';
+
+const configuration = new Configuration(env);
 
 export default class UsersController implements Controller {
     public path = '/user';
     public router = express.Router();
     private upload = multer({ storage: this.storage });
 
-    constructor(public storage: any, private defaultUserImage: string) {
+    constructor(public storage: any) {
         this.initializeRoutes();
     }
 
@@ -112,7 +117,7 @@ export default class UsersController implements Controller {
 
             //delete the photo before upload with the aim to reduce old files in db
             if (req.file) {
-                if (this.defaultUserImage !== user.imageId.toString()) {
+                if (configuration.environmentConfig.defaultUserImage !== user.imageId.toString()) {
                     const bucket = new mongoose.mongo.GridFSBucket(conn.db);
 
                     let id = new mongoose.mongo.ObjectID(user.imageId);

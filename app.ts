@@ -14,10 +14,10 @@ const env = process.env.NODE_ENV || 'development';
 const configuration = new Configuration(env);
 
 const app = new App([
-    new AuthController(configuration.environmentConfig.JWT_SECRET),
+    new AuthController(),
     new PostsController(storage),
     new CommentsController(),
-    new UsersController(storage, configuration.environmentConfig.defaultUserImage),
+    new UsersController(storage),
     new FileController()
 ], configuration.environmentConfig, logger);
 
