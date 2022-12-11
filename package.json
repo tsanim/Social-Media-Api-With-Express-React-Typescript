@@ -39,7 +39,7 @@
     "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "dotenv": "^8.1.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-favicon": "^2.0.1",
     "express-validator": "^5.3.1",
     "fs": "0.0.1-security",
